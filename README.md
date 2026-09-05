@@ -18,6 +18,8 @@ Recover legitimate recurring-payment revenue intelligently — while determinist
 
 ---
 
+<a id="project-links"></a>
+<a id="-project-links"></a>
 ## 🔗 Project Links
 
 | Resource | Description | Target |
@@ -28,6 +30,8 @@ Recover legitimate recurring-payment revenue intelligently — while determinist
 
 ---
 
+<a id="table-of-contents"></a>
+<a id="-table-of-contents"></a>
 ## 📑 Table of Contents
 1. [🔗 Project Links](#project-links)
 2. [🎯 Track 03 & Problem Statement](#track-03--problem-statement)
@@ -98,6 +102,8 @@ Applying unconstrained generative AI or black-box neural networks directly to pa
 
 <a id="project-objectives--what-does-it-solve"></a>
 <a id="project-objectives--what-does-it-solve-"></a>
+<a id="-project-objectives--what-does-it-solve"></a>
+<a id="-project-objectives--what-does-it-solve-"></a>
 ## 💡 Project Objectives — What does it solve? ⭐
 
 Revora was engineered to address four concrete objectives in recurring payment recovery:
@@ -110,6 +116,7 @@ Revora was engineered to address four concrete objectives in recurring payment r
 ---
 
 <a id="solution-how-revora-works"></a>
+<a id="-solution-how-revora-works"></a>
 <a id="solution"></a>
 <a id="how-revora-works"></a>
 ## 🚀 Solution: How Revora Works
@@ -155,6 +162,8 @@ Stage 6: Audit [SIMULATION] ◄── Stage 5: Outreach [CONSTRAINED] ◄── 
 
 <a id="system-architecture"></a>
 <a id="system-architecture-"></a>
+<a id="-system-architecture"></a>
+<a id="-system-architecture-"></a>
 <a id="ai-decision--safety-architecture"></a>
 ## 🏗️ System Architecture ⭐
 
@@ -204,6 +213,8 @@ Revora supports conversational Romanized Hinglish and Tanglish messaging designe
 
 <a id="build-challenges--technical-obstacles"></a>
 <a id="build-challenges--technical-obstacles-"></a>
+<a id="-build-challenges--technical-obstacles"></a>
+<a id="-build-challenges--technical-obstacles-"></a>
 ## 🛠️ Build Challenges & Technical Obstacles ⭐
 
 During development, four fundamental engineering challenges were addressed:
@@ -217,6 +228,8 @@ During development, four fundamental engineering challenges were addressed:
 
 ---
 
+<a id="evaluation--results"></a>
+<a id="-evaluation--results"></a>
 ## 📊 Evaluation & Results
 
 > **Methodological Disclosure**: All evaluation metrics reported below are **synthetic simulation/evaluation results** derived from a chronologically held-out test cohort of 180 recurring payment events. They demonstrate architectural efficacy in a controlled sandbox and do not represent real-world merchant production figures.
@@ -255,6 +268,8 @@ Evaluated across five random seeds (`42`, `100`, `555`, `2026`, `9999`):
 
 ---
 
+<a id="screenshots"></a>
+<a id="-screenshots"></a>
 ## 🎬 Screenshots
 
 The screenshots below illustrate the complete recovery workflow implemented in Revora, leading with the operator console workstation.
@@ -305,6 +320,8 @@ The screenshots below illustrate the complete recovery workflow implemented in R
 
 ---
 
+<a id="technology-stack"></a>
+<a id="-technology-stack"></a>
 ## 🧰 Technology Stack
 
 | Layer | Technologies | Role in Revora |
@@ -320,6 +337,8 @@ The screenshots below illustrate the complete recovery workflow implemented in R
 
 ---
 
+<a id="testing--verification"></a>
+<a id="-testing--verification"></a>
 ## 🧪 Testing & Verification
 
 Revora is verified through a complete test suite spanning backend logic, production bundling, and automated browser workflows:
@@ -346,6 +365,8 @@ node scripts/e2e_verify_landing.js
 
 ---
 
+<a id="repository-structure"></a>
+<a id="-repository-structure"></a>
 ## 📁 Repository Structure
 
 ```
@@ -385,6 +406,8 @@ Revora/
 
 ---
 
+<a id="setup--local-development"></a>
+<a id="-setup--local-development"></a>
 ## ▶️ Setup & Local Development
 
 ### Prerequisites
@@ -432,6 +455,7 @@ npm run dev
 ---
 
 <a id="limitations--future-roadmap"></a>
+<a id="-limitations--future-roadmap"></a>
 <a id="limitations--transparency"></a>
 <a id="future-improvements"></a>
 ## ⚠️ Limitations & Future Roadmap
@@ -453,6 +477,8 @@ In the spirit of honest fintech engineering and academic transparency:
 
 ---
 
+<a id="builder"></a>
+<a id="-builder"></a>
 ## 👩‍💻 Builder
 
 **Vishalini P G**
