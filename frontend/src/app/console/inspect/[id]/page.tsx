@@ -110,7 +110,7 @@ export default function InspectPaymentPage() {
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-[#222950] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] transition-colors shadow-sm cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 text-[#E8A33D]" />
-            <span>← Back to Payments Queue</span>
+            <span>Back to Payments Queue</span>
           </Link>
 
           <div className="h-5 w-px bg-[#2A3362] hidden sm:block" />
