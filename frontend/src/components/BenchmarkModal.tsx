@@ -179,7 +179,7 @@ export const BenchmarkModal: React.FC<BenchmarkModalProps> = ({ onClose }) => {
                 <div className="space-y-2">
                   <div className="text-xs font-mono font-semibold text-[#B4B9D2] uppercase tracking-wider flex items-center gap-1.5">
                     <Layers className="w-4 h-4 text-[#E8A33D]" />
-                    <span>Multilingual Outreach Breakdown (Phase 5 Performance)</span>
+                    <span>Multilingual Outreach Breakdown (Localized Performance)</span>
                   </div>
 
                   <div className="border border-[#2A3362] rounded-lg overflow-hidden">

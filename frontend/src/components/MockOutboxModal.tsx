@@ -66,7 +66,7 @@ export const MockOutboxModal: React.FC<MockOutboxModalProps> = ({ paymentId, onC
                 </span>
               </div>
               <div className="text-[11px] text-[#B4B9D2]">
-                Phase 5 Constrained Outreach Preview & Safety Guardrails
+                Constrained Outreach Preview & Safety Guardrails
               </div>
             </div>
           </div>

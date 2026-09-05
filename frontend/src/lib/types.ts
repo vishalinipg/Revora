@@ -2,7 +2,7 @@
  * Operational API TypeScript Interfaces.
  * 
  * STRICT ISOLATION GUARANTEE:
- * These types map directly to the Phase 8 FastAPI Pydantic schemas.
+ * These types map directly to the FastAPI Pydantic schemas.
  * Under no circumstances do they declare or expect hidden ground-truth fields
  * (e.g. PaymentGroundTruth, true_failure_cause, ground_truth_recoverability).
  */
