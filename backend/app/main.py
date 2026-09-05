@@ -49,7 +49,7 @@ app = FastAPI(
         "Enforces deterministic stopping rules, causal diagnosis, interpretable ML, "
         "and multilingual outreach copy generation."
     ),
-    version="1.0.0",
+    version="1.0.1",
     lifespan=lifespan,
     docs_url="/docs",
     redoc_url="/redoc",
@@ -77,7 +77,7 @@ def root():
     return {
         "product": "Revora",
         "tagline": "Adaptive Revenue Recovery for Recurring Payments",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "environment": "test_mode",
         "production_rail_target": "UPI AutoPay (NPCI e-Mandate)",
         "test_mode_adapter": "Razorpay Card Subscriptions",
@@ -85,3 +85,44 @@ def root():
         "health_url": "/health",
         "api_v1_url": "/api/v1",
     }
+
+
+@app.get("/api/v1/system/status", tags=["System"])
+def system_status_endpoint():
+    """Diagnostic system and database record status."""
+    from backend.app.config import DATABASE_PATH
+    from backend.app.database import SessionLocal
+    from backend.app.models import Payment, Customer, Mandate
+    db = SessionLocal()
+    try:
+        return {
+            "status": "healthy",
+            "version": "1.0.1",
+            "database_file_exists": DATABASE_PATH.exists(),
+            "database_path": str(DATABASE_PATH),
+            "payments_count": db.query(Payment).count(),
+            "customers_count": db.query(Customer).count(),
+            "mandates_count": db.query(Mandate).count(),
+        }
+    finally:
+        db.close()
+
+
+@app.api_route("/api/v1/system/seed", methods=["GET", "POST"], tags=["System"])
+def system_seed_endpoint():
+    """Idempotent on-demand database seed endpoint."""
+    from backend.app.database import SessionLocal
+    from backend.app.models import Payment, Customer, Mandate
+    db = SessionLocal()
+    try:
+        from scripts.generate_data import generate_synthetic_dataset
+        generate_synthetic_dataset(num_payments=1200, seed=42, db_session=db)
+        return {
+            "status": "success",
+            "message": "Revora synthetic recurring payments database seeded successfully",
+            "payments_count": db.query(Payment).count(),
+            "customers_count": db.query(Customer).count(),
+            "mandates_count": db.query(Mandate).count(),
+        }
+    finally:
+        db.close()
