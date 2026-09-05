@@ -33,8 +33,8 @@ export const LandingHeader: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-lg font-serif font-bold tracking-tight text-[#F2F0EA]">REVORA</span>
-              <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-[#1B2140] text-[#B4B9D2] border border-[#2A3362]">
-                Buildathon 2026
+              <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-[#1B2140] text-[#B4B9D2] border border-[#2A3362]">
+                Razorpay Buildathon 2026
               </span>
             </div>
             <p className="text-[11px] text-[#7E85A6] hidden sm:block">
