@@ -28,12 +28,50 @@ Recover legitimate recurring-payment revenue intelligently — while determinist
 
 ---
 
-## 🎯 Selected Track
+## 📑 Table of Contents
+1. [🔗 Project Links](#project-links)
+2. [🎯 Track 03 & Problem Statement](#track-03--problem-statement)
+3. [💡 Project Objectives — What does it solve? ⭐](#project-objectives--what-does-it-solve)
+4. [🚀 Solution: How Revora Works](#solution-how-revora-works)
+5. [🏗️ System Architecture ⭐](#system-architecture)
+6. [🛠️ Build Challenges & Technical Obstacles ⭐](#build-challenges--technical-obstacles)
+7. [📊 Evaluation & Results](#evaluation--results)
+8. [🎬 Screenshots](#screenshots)
+9. [🧰 Technology Stack](#technology-stack)
+10. [🧪 Testing & Verification](#testing--verification)
+11. [📁 Repository Structure](#repository-structure)
+12. [▶️ Setup & Local Development](#setup--local-development)
+13. [⚠️ Limitations & Future Roadmap](#limitations--future-roadmap)
+14. [👩‍💻 Builder](#builder)
+
+---
+
+<a id="track-03--problem-statement"></a>
+<a id="selected-track"></a>
+<a id="problem-statement"></a>
+## 🎯 Track 03 & Problem Statement
 
 * **Competition**: Razorpay Buildathon 2026
 * **Track**: **Track 03 — AI Revenue Recovery**
 * **Official Track Brief**:
-  > *"Find revenue that’s slipping away and win it back — Build an agent that detects revenue at risk, determines the right intervention, and executes a bounded recovery workflow: from payment failures and checkout abandonment to overdue receivables."*
+  > **Find revenue that’s slipping away and win it back**
+  > 
+  > Build an agent that detects revenue at risk, determines the right intervention, and executes a bounded recovery workflow: from payment failures and checkout abandonment to overdue receivables.
+  > 
+  > #### ⚡ WHY NOW
+  > Revenue loss rarely happens in one clean step. A payment degrades, a checkout gets abandoned, a subscription fails, or an invoice goes overdue. AI can now close the loop from detecting the problem to diagnosing it, choosing the right intervention, and recovering the money.
+  > 
+  > #### 🧭 EXAMPLE DIRECTIONS
+  > * `+` **Payment degradation → root cause → recovery action** *(Addressed by Revora)*
+  > * `+` Checkout drop-off recovery
+  > * `+` **Failed-subscription recovery** *(Addressed by Revora)*
+  > * `+` B2B receivables chaser
+  > * `+` **Mandate retry sequencer** *(Addressed by Revora)*
+  > * `+` **Hinglish voice recovery** *(Addressed by Revora via Romanized Hinglish & Tanglish)*
+  > * `+` Promise-to-pay tracker
+  > 
+  > #### 🏆 THE BAR
+  > *Don’t just identify the problem. Show measured money recovered across a batch, with compliant escalation, stopping rules, and an audit trail.*
 
 Revora addresses this challenge across four targeted recovery capabilities:
 * 🔄 **Payment degradation → root cause → recovery action**: Deterministic diagnosis mapping raw failure codes to causal classifications and bounded actions.
@@ -42,65 +80,6 @@ Revora addresses this challenge across four targeted recovery capabilities:
 * 🇮🇳 **Hinglish & Tanglish recovery**: Conversational Romanized mobile messaging tailored for Indian users with approved static fallbacks.
 
 > 🎯 **Evaluation Alignment**: Aligned with the track's core standard to show measured money recovered across a batch with compliant escalation, deterministic stopping rules, and full auditability (evaluated in [📊 Evaluation & Results](#evaluation--results)).
-
----
-
-## 📑 Table of Contents
-1. [🔗 Project Links](#project-links)
-2. [🎯 Selected Track](#selected-track)
-3. [💡 Project Objectives — What does it solve?](#project-objectives--what-does-it-solve)
-4. [⚠️ Problem Statement](#problem-statement)
-5. [🚀 Solution](#solution)
-6. [⚙️ How Revora Works](#how-revora-works)
-7. [🏗️ System Architecture](#system-architecture)
-8. [🤖 AI, Decision & Safety Architecture](#ai-decision--safety-architecture)
-9. [🛠️ Build Challenges & Technical Obstacles](#build-challenges--technical-obstacles)
-10. [📊 Evaluation & Results](#evaluation--results)
-11. [🎬 Screenshots / Demo](#screenshots--demo)
-12. [🧰 Technology Stack](#technology-stack)
-13. [🧪 Testing & Verification](#testing--verification)
-14. [📁 Repository Structure](#repository-structure)
-15. [▶️ Setup & Local Development](#setup--local-development)
-16. [⚠️ Limitations & Transparency](#limitations--transparency)
-17. [🔮 Future Improvements](#future-improvements)
-18. [👩‍💻 Builder](#builder)
-
----
-
-## 💡 Project Objectives — What does it solve?
-
-Revora was engineered to address four concrete objectives in recurring payment recovery:
-
-1. **Recover Legitimate Recurring Revenue**: Distinguish recoverable soft failures from fatal errors to recover recurring subscriptions before cancellation.
-2. **Eliminate Futile Retries**: Deterministically detect permanent failures (expired mandates, blocked accounts) to prevent wasted gateway fees and customer notification spam.
-3. **Enforce Fintech Safety & Guardrails**: Ensure machine learning can advise but never independently authorize money-related operations.
-4. **Deliver Culturally Natural Recovery Outreach**: Provide localized, conversational communication in English, Hinglish, and Tanglish with approved fallback guarantees.
-
----
-
-## ⚠️ Problem Statement
-
-### 🎯 TRACK 03: AI Revenue Recovery
-> **Find revenue that’s slipping away and win it back**
-> 
-> Build an agent that detects revenue at risk, determines the right intervention, and executes a bounded recovery workflow: from payment failures and checkout abandonment to overdue receivables.
-> 
-> #### ⚡ WHY NOW
-> Revenue loss rarely happens in one clean step. A payment degrades, a checkout gets abandoned, a subscription fails, or an invoice goes overdue. AI can now close the loop from detecting the problem to diagnosing it, choosing the right intervention, and recovering the money.
-> 
-> #### 🧭 EXAMPLE DIRECTIONS
-> * `+` **Payment degradation → root cause → recovery action** *(Addressed by Revora)*
-> * `+` Checkout drop-off recovery
-> * `+` **Failed-subscription recovery** *(Addressed by Revora)*
-> * `+` B2B receivables chaser
-> * `+` **Mandate retry sequencer** *(Addressed by Revora)*
-> * `+` **Hinglish voice recovery** *(Addressed by Revora via Romanized Hinglish & Tanglish)*
-> * `+` Promise-to-pay tracker
-> 
-> #### 🏆 THE BAR
-> *Don’t just identify the problem. Show measured money recovered across a batch, with compliant escalation, stopping rules, and an audit trail.*
-
----
 
 ### The Recurring Payment Failure Modes Revora Solves
 
@@ -117,16 +96,25 @@ Applying unconstrained generative AI or black-box neural networks directly to pa
 
 ---
 
-## 🚀 Solution
+<a id="project-objectives--what-does-it-solve"></a>
+<a id="project-objectives--what-does-it-solve-"></a>
+## 💡 Project Objectives — What does it solve? ⭐
 
-Revora closes the loop from detection to recovery through a **bounded four-step workflow** anchored by four architectural pillars:
+Revora was engineered to address four concrete objectives in recurring payment recovery:
 
-```
-[1. Detect Problem]    ──► Revenue-at-Risk Engine captures failure codes & rail metadata
-[2. Diagnose Root]     ──► Deterministic taxonomy classifies Soft, Actionable, or Hard-Blocked
-[3. Choose Action]     ──► Calibrated ML propensity signal + deterministic policy gate
-[4. Recover Revenue]   ──► Constrained multilingual outreach + simulated outbox resolution
-```
+1. **Recover Legitimate Recurring Revenue**: Distinguish recoverable soft failures from fatal errors to recover recurring subscriptions before cancellation.
+2. **Eliminate Futile Retries**: Deterministically detect permanent failures (expired mandates, blocked accounts) to prevent wasted gateway fees and customer notification spam.
+3. **Enforce Fintech Safety & Guardrails**: Ensure machine learning can advise but never independently authorize money-related operations.
+4. **Deliver Culturally Natural Recovery Outreach**: Provide localized, conversational communication in English, Hinglish, and Tanglish with approved fallback guarantees.
+
+---
+
+<a id="solution-how-revora-works"></a>
+<a id="solution"></a>
+<a id="how-revora-works"></a>
+## 🚀 Solution: How Revora Works
+
+Revora closes the loop from detection to recovery through an auditable **six-stage pipeline** anchored by **four architectural pillars**:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -148,11 +136,7 @@ Revora closes the loop from detection to recovery through a **bounded four-step 
 
 > 💡 **Core Principle**: *AI informs. Deterministic policy decides. Safety validators control communication.*
 
----
-
-## ⚙️ How Revora Works
-
-Revora processes failed recurring payments through an auditable six-stage pipeline:
+### The Six-Stage Recovery Workflow
 
 ```
 Stage 1: Detect [OBSERVED] ──► Stage 2: Diagnose [DECISION] ──► Stage 3: Score [SIGNAL]
@@ -169,41 +153,40 @@ Stage 6: Audit [SIMULATION] ◄── Stage 5: Outreach [CONSTRAINED] ◄── 
 
 ---
 
-## 🏗️ System Architecture
+<a id="system-architecture"></a>
+<a id="system-architecture-"></a>
+<a id="ai-decision--safety-architecture"></a>
+## 🏗️ System Architecture ⭐
 
 ![REVORA System Architecture](docs/screenshots/system_architecture_diagram.png)
 
-### Key Architectural Principles
+### 1. Key Architectural Principles
 1. **Observed Data vs. Simulation Oracle**: Latent ground-truth data exists exclusively inside the simulation oracle (`backend/app/evaluation/`). The operational pipeline and feature extractor have zero access to future counterfactuals.
 2. **Signal vs. Authority**: Machine learning and language models generate advisory signals and draft text. Only deterministic code holds the authority to authorize financial state transitions.
 3. **Execution Sandbox**: The entire pipeline operates in an isolated environment with simulated outboxes, operating without real financial or external communication side-effects.
 
----
+### 2. End-to-End Authority Pipeline
+In **Track 03 — AI Revenue Recovery**, machine learning provides adaptive intelligence while remaining safely bounded. Revora defines clear operational boundaries between predictive signals, deterministic authority, and communication safety:
 
-## 🤖 AI, Decision & Safety Architecture
-
-In **Track 03 — AI Revenue Recovery**, machine learning provides adaptive intelligence while remaining safely bounded. Revora defines clear operational boundaries between predictive signals, deterministic authority, and communication safety.
-
-### 1. End-to-End Authority Pipeline
 ```
 Observed Signals ──► Failure Diagnosis ──► ML Propensity ──► Deterministic Policy ──► Safety Validator ──► Mock Outbox
    [Observed]           [Decision]         [Signal Only]           [Decision]           [Sanitization]     [Simulation]
 ```
 
-### 2. The AI Role: Calibrated Propensity Scoring
+### 3. Predictive AI: Calibrated Propensity Scoring
 * **What it Predicts**: Propensity-to-Pay score ($0.000$ to $1.000$) estimating the probability of payment recovery upon user prompt.
 * **Model Architecture**: Calibrated Logistic Regression (`scikit-learn`) where Platt scaling calibrates the model's raw probabilities against observed recovery outcomes.
 * **Observed Features (Tier 1)**: Customer tenure, consecutive successful cycles, payment rail, attempt count, normalized invoice amount, and failure category.
 * **Explainability**: Outputs exact log-odds contributions ($\text{logit}(p) = \beta_0 + \sum \beta_i x_i$) translated into human-readable factor waterfalls (e.g., `+0.42 log-odds from tenure >= 12 months`).
 * **Strict Prohibitions**: The ML model **cannot** authorize a debit, override a `STOP`, alter invoice amounts, bypass retry caps, or message customers directly.
 
-### 3. Decision Authority: Deterministic Policy Engine
+### 4. Decision Authority: Deterministic Policy Engine
 * **Retry Ceilings**: Enforces a strict maximum of 3 collection attempts per payment lifecycle.
 * **Mandatory Cooldowns**: Requires a minimum 24-hour spacing between automated retries to protect customer accounts from bank penalty fees.
 * **Hard Stopping**: Fatal failure codes (`blocked_account`, `expired_mandate`, `revoked_mandate`) trigger immediate `STOP` or `HUMAN_ESCALATION`, completely overriding any ML score.
 * **Amount Immutability**: Invoice amounts are bound directly from database records as read-only fields; no AI component can modify currency or amount values.
 
-### 4. Multilingual Outreach & Cultural Safety
+### 5. Multilingual Outreach & Cultural Safety
 Revora supports conversational Romanized Hinglish and Tanglish messaging designed for familiar mobile communication, alongside standard English.
 
 | Language | Code | Cultural Framing | Tone | Safe Fallback |
@@ -219,7 +202,9 @@ Revora supports conversational Romanized Hinglish and Tanglish messaging designe
 
 ---
 
-## 🛠️ Build Challenges & Technical Obstacles
+<a id="build-challenges--technical-obstacles"></a>
+<a id="build-challenges--technical-obstacles-"></a>
+## 🛠️ Build Challenges & Technical Obstacles ⭐
 
 During development, four fundamental engineering challenges were addressed:
 
@@ -266,18 +251,11 @@ Evaluated across five random seeds (`42`, `100`, `555`, `2026`, `9999`):
 | **Interventions Attempted** | **262.6 ± 6.7** | 325.2 ± 11.7 | **19.2% fewer interventions** |
 | **Oracle Concordance Rate** | **85.56% ± 0.00%** | 49.44% ± 0.00% | **+36.12 percentage points oracle concordance** |
 
-### Verification Snapshot
-
-| Verification Layer | Scope | Result | Status |
-| :--- | :--- | :---: | :---: |
-| **Backend Test Suite** | 65 regression & isolation tests | 65 / 65 Passed | ✅ Verified |
-| **Landing Page E2E** | 8 Puppeteer browser checks | 8 / 8 Passed | ✅ Verified |
-| **Operator Console E2E** | 9 Puppeteer workstation checks | 9 / 9 Passed | ✅ Verified |
-| **Production Build** | Next.js 16 App Router bundle | 0 errors, 0 warnings | ✅ Verified |
+> 🧪 **System Verification**: Automated unit tests (65/65 passed) and end-to-end browser suites (17/17 passed) verifying deterministic rules, leakage prevention, and UI flows are documented in [🧪 Testing & Verification](#testing--verification).
 
 ---
 
-## 🎬 Screenshots / Demo
+## 🎬 Screenshots
 
 The screenshots below illustrate the complete recovery workflow implemented in Revora, leading with the operator console workstation.
 
@@ -324,10 +302,6 @@ The screenshots below illustrate the complete recovery workflow implemented in R
 ### 11. Evaluation Metrics Report
 ![Evaluation Metrics Report](docs/screenshots/12_landing_evaluation_report.png)
 *Comparative evaluation metrics and 5-seed statistical robustness summary on the public landing page.*
-
-### 12. Accessibility & Reduced Motion Mode
-![Reduced Motion](docs/screenshots/13_landing_reduced_motion.png)
-*Accessible static layout adhering to prefers-reduced-motion criteria.*
 
 ---
 
@@ -457,8 +431,12 @@ npm run dev
 
 ---
 
-## ⚠️ Limitations & Transparency
+<a id="limitations--future-roadmap"></a>
+<a id="limitations--transparency"></a>
+<a id="future-improvements"></a>
+## ⚠️ Limitations & Future Roadmap
 
+### Current Limitations & Transparency
 In the spirit of honest fintech engineering and academic transparency:
 
 1. **Synthetic Data**: All payment IDs, customer records, mandate IDs, and transaction histories were synthetically generated to model common failure modes in Indian recurring payment rails (UPI AutoPay and card subscriptions).
@@ -466,10 +444,7 @@ In the spirit of honest fintech engineering and academic transparency:
 3. **Evaluation Boundaries**: Metrics reported in benchmark tables reflect synthetic cohort simulations; they should not be construed as real-world production revenue guarantees.
 4. **Regulatory Guardrails**: References to RBI circulars or NPCI e-mandate rules represent engineering design guardrails implemented within software logic; they do not constitute formal regulatory certification or endorsement by RBI or NPCI.
 
----
-
-## 🔮 Future Improvements
-
+### Future Improvements & Production Path
 * **Production Payment Gateway Adapters**: Real-time webhook ingestion for live Razorpay Subscriptions and UPI AutoPay APIs.
 * **Configurable Merchant Policy Studio**: Web-based policy editor allowing merchants to customize cooldown hours and retry ceilings per plan tier.
 * **Expanded Regional Language Support**: Extending conversational models to Marathi, Telugu, Bengali, and Kannada.
