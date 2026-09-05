@@ -189,7 +189,7 @@ export default function OperatorConsolePage() {
       />
 
       {/* Main Operator Console Workspace */}
-      <main className="flex-1 max-w-[1680px] w-full mx-auto px-4 py-3 flex flex-col gap-3">
+      <main className="flex-1 max-w-[1720px] w-full mx-auto px-6 py-5 flex flex-col gap-5">
         {/* Executive Metric Aggregates */}
         <MetricsOverview
           data={metricsData}
@@ -198,10 +198,10 @@ export default function OperatorConsolePage() {
           onRetry={fetchMetrics}
         />
 
-        {/* 2-Column High-Density Workstation Layout */}
-        <section aria-label="Payment Operations Console" className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-3 min-h-[580px]">
-          {/* Left Column: At-Risk Payments Queue (5 cols) */}
-          <div className="lg:col-span-5 h-full min-h-[500px]">
+        {/* 2-Column Balanced Ergonomic Workstation Layout */}
+        <section aria-label="Payment Operations Console" className="flex-1 grid grid-cols-1 xl:grid-cols-12 gap-5 min-h-[620px]">
+          {/* Left Column: At-Risk Payments Queue (6 cols on xl for roomy table) */}
+          <div className="xl:col-span-6 h-full min-h-[540px]">
             <PaymentQueue
               data={paymentsData}
               isLoading={isLoadingPayments}
@@ -217,8 +217,8 @@ export default function OperatorConsolePage() {
             />
           </div>
 
-          {/* Right Column: Signal & Decision Inspector (7 cols) */}
-          <div className="lg:col-span-7 h-full min-h-[500px]">
+          {/* Right Column: Signal & Decision Inspector (6 cols on xl) */}
+          <div className="xl:col-span-6 h-full min-h-[540px]">
             <DecisionInspector
               paymentDetail={paymentDetail}
               isLoading={isLoadingDetail}

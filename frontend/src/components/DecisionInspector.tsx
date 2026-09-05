@@ -77,24 +77,24 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
   const importantFeatures = lastDecisionResult?.important_features || [];
 
   return (
-    <div className="flex flex-col h-full bg-[#1B2140] border border-[#2A3362] rounded-lg overflow-hidden">
+    <div className="flex flex-col h-full bg-[#1B2140] border border-[#2A3362] rounded-xl overflow-hidden shadow-sm">
       {/* Top Inspector Header */}
-      <div className="p-4 border-b border-[#2A3362] bg-[#171D36] flex flex-wrap items-center justify-between gap-3">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2.5">
+      <div className="p-5 border-b border-[#2A3362] bg-[#171D36] flex flex-wrap items-center justify-between gap-4">
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-3">
             <span className="text-xs font-mono text-[#7E85A6]">INSPECTING PAYMENT</span>
-            <span className="text-sm font-mono font-bold text-[#F2F0EA] px-2 py-0.5 rounded bg-[#222950] border border-[#2A3362]">
+            <span className="text-sm font-mono font-bold text-[#F2F0EA] px-2.5 py-0.5 rounded-md bg-[#222950] border border-[#2A3362]">
               {payment.payment_id}
             </span>
-            <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-semibold ${riskBadge.className}`}>
+            <span className={`px-2.5 py-0.5 rounded-md text-xs font-mono font-semibold ${riskBadge.className}`}>
               RISK: {riskBadge.label} ({risk_assessment.risk_score.toFixed(2)})
             </span>
           </div>
-          <div className="text-xs text-[#B4B9D2] flex items-center gap-3">
-            <span>Customer: <strong className="text-[#F2F0EA]">{customer.name}</strong> ({customer.customer_id})</span>
-            <span>·</span>
+          <div className="text-xs text-[#B4B9D2] flex flex-wrap items-center gap-3">
+            <span>Customer: <strong className="text-[#F2F0EA]">{customer.name}</strong> <span className="text-[#7E85A6] font-mono">({customer.customer_id})</span></span>
+            <span className="text-[#7E85A6]">·</span>
             <span>Plan: <strong className="text-[#F2F0EA]">{customer.subscription_plan}</strong></span>
-            <span>·</span>
+            <span className="text-[#7E85A6]">·</span>
             <span>Language: <strong className="text-[#E8A33D] font-mono">{customer.preferred_language}</strong></span>
           </div>
         </div>
@@ -104,36 +104,36 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
       </div>
 
       {/* Main Inspection Body */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-5 space-y-5">
         {/* Row 1: Decision Banner & Execution Controls */}
-        <div className="p-4 rounded-lg bg-[#222950] border border-[#2A3362] relative overflow-hidden">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            <div className="space-y-1.5">
+        <div className="p-5 rounded-xl bg-[#222950] border border-[#2A3362] relative overflow-hidden shadow-sm">
+          <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+            <div className="space-y-2">
               <div className="flex items-center gap-2 text-xs font-mono text-[#7E85A6] uppercase">
-                <Cpu className="w-3.5 h-3.5 text-[#E8A33D]" />
+                <Cpu className="w-4 h-4 text-[#E8A33D]" />
                 <span className="font-semibold text-[#B4B9D2]">Deterministic Revora Decision Engine</span>
-                <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#1B2140] text-[#B4B9D2] border border-[#2A3362]">
+                <span className="text-[10px] px-2 py-0.5 rounded-md bg-[#1B2140] text-[#B4B9D2] border border-[#2A3362]">
                   {lastDecisionResult?.policy_version || "revora_policy_v1"}
                 </span>
               </div>
 
-              <div className="flex items-center gap-3">
-                <span className={`px-3 py-1 rounded text-sm font-mono font-bold tracking-wide ${actionBadge.className}`}>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className={`px-3.5 py-1.5 rounded-lg text-sm font-mono font-bold tracking-wide shadow-sm ${actionBadge.className}`}>
                   {actionBadge.label}
                 </span>
-                <span className="text-xs text-[#B4B9D2] max-w-xl">
+                <span className="text-xs text-[#B4B9D2] max-w-xl leading-relaxed">
                   {lastDecisionResult?.decision_reason || latest_action?.decision_reason || "Deterministic policy evaluation ready."}
                 </span>
               </div>
             </div>
 
             {/* Operator Actions */}
-            <div className="flex flex-wrap items-center gap-2 pt-2 lg:pt-0">
+            <div className="flex flex-wrap items-center gap-2.5 pt-2 xl:pt-0">
               <button
                 data-testid="rerun-decision-btn"
                 onClick={onRerunDecision}
                 disabled={isExecutingDecision}
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded text-xs font-semibold bg-[#E8A33D] hover:bg-[#E8A33D]/90 text-[#12172B] shadow-sm transition-all disabled:opacity-50 font-mono"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold bg-[#E8A33D] hover:bg-[#E8A33D]/90 text-[#12172B] shadow-sm transition-all disabled:opacity-50 font-mono cursor-pointer"
               >
                 <Play className={`w-3.5 h-3.5 fill-current ${isExecutingDecision ? "animate-spin" : ""}`} />
                 <span>{isExecutingDecision ? "Executing Policy..." : "Re-run Engine"}</span>
@@ -142,7 +142,7 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
               <button
                 data-testid="preview-outreach-btn"
                 onClick={onOpenOutreach}
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded text-xs font-medium bg-[#1B2140] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] transition-colors"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium bg-[#1B2140] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] transition-colors cursor-pointer"
               >
                 <MessageSquare className="w-3.5 h-3.5 text-[#E8A33D]" />
                 <span>Preview Outreach</span>
@@ -151,7 +151,7 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
               <button
                 data-testid="timeline-btn"
                 onClick={onOpenTimeline}
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded text-xs font-medium bg-[#1B2140] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] transition-colors"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium bg-[#1B2140] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] transition-colors cursor-pointer"
               >
                 <History className="w-3.5 h-3.5 text-[#B4B9D2]" />
                 <span>Timeline</span>
@@ -161,10 +161,10 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
 
           {/* Audit Confirmation if Executed Live */}
           {lastDecisionResult && (
-            <div className="mt-3 pt-3 border-t border-[#2A3362] flex items-center justify-between text-[11px] font-mono text-[#B4B9D2]">
-              <div className="flex items-center gap-1.5 text-[#7BA88C]">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Live Decision Logged: {lastDecisionResult.decision_id} (Audit log recorded to database)</span>
+            <div className="mt-3.5 pt-3.5 border-t border-[#2A3362] flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-[#B4B9D2]">
+              <div className="flex items-center gap-2 text-[#7BA88C]">
+                <CheckCircle2 className="w-4 h-4" />
+                <span>Live Decision Logged: <strong className="font-semibold">{lastDecisionResult.decision_id}</strong> (Audit log recorded to database)</span>
               </div>
               <span className="text-[#7E85A6]">Actor: revora_decision_engine</span>
             </div>
@@ -174,56 +174,56 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
         {/* Row 2: Diagnostics & Signals Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Card A: Observed Provider Signals (Tier 1) */}
-          <div className="p-3.5 rounded-lg bg-[#171D36] border border-[#2A3362] space-y-3">
-            <div className="flex items-center justify-between border-b border-[#2A3362] pb-2">
-              <div className="text-xs font-mono font-semibold text-[#B4B9D2] uppercase flex items-center gap-1.5">
+          <div className="p-4.5 rounded-xl bg-[#171D36] border border-[#2A3362] space-y-3.5 shadow-sm">
+            <div className="flex items-center justify-between border-b border-[#2A3362] pb-2.5">
+              <div className="text-xs font-mono font-semibold text-[#B4B9D2] uppercase flex items-center gap-2">
                 <Activity className="w-3.5 h-3.5 text-[#E8A33D]" />
                 <span>Observed Provider Signals</span>
               </div>
-              <span className="text-[10px] font-mono text-[#7BA88C] bg-[#7BA88C]/10 px-1.5 py-0.5 rounded border border-[#7BA88C]/30">
+              <span className="text-[10px] font-mono text-[#7BA88C] bg-[#7BA88C]/10 px-2 py-0.5 rounded-md border border-[#7BA88C]/30">
                 Tier 1 Operational
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="p-2 rounded bg-[#222950] border border-[#2A3362]">
+            <div className="grid grid-cols-2 gap-2.5 text-xs">
+              <div className="p-2.5 rounded-lg bg-[#222950] border border-[#2A3362]">
                 <div className="text-[10px] text-[#7E85A6] uppercase font-mono">Amount Due</div>
-                <div className="text-sm font-bold font-mono text-[#F2F0EA] tabular-nums">
+                <div className="text-sm font-bold font-mono text-[#F2F0EA] tabular-nums mt-0.5">
                   {formatINR(payment.amount)}
                 </div>
               </div>
 
-              <div className="p-2 rounded bg-[#222950] border border-[#2A3362]">
+              <div className="p-2.5 rounded-lg bg-[#222950] border border-[#2A3362]">
                 <div className="text-[10px] text-[#7E85A6] uppercase font-mono">Failure Code</div>
-                <div className="text-xs font-mono text-[#E8A33D] font-semibold truncate" title={payment.failure_code || "None"}>
+                <div className="text-xs font-mono text-[#E8A33D] font-semibold truncate mt-0.5" title={payment.failure_code || "None"}>
                   {payment.failure_code || "None"}
                 </div>
               </div>
 
-              <div className="p-2 rounded bg-[#222950] border border-[#2A3362]">
+              <div className="p-2.5 rounded-lg bg-[#222950] border border-[#2A3362]">
                 <div className="text-[10px] text-[#7E85A6] uppercase font-mono">Payment Rail</div>
-                <div className="text-xs font-mono text-[#B4B9D2]">
+                <div className="text-xs font-mono text-[#B4B9D2] mt-0.5">
                   {getRailLabel(payment.payment_rail)}
                 </div>
               </div>
 
-              <div className="p-2 rounded bg-[#222950] border border-[#2A3362]">
+              <div className="p-2.5 rounded-lg bg-[#222950] border border-[#2A3362]">
                 <div className="text-[10px] text-[#7E85A6] uppercase font-mono">Mandate Status</div>
-                <div className="text-xs font-mono text-[#B4B9D2]">
+                <div className="text-xs font-mono text-[#B4B9D2] mt-0.5">
                   {mandate.mandate_status}
                 </div>
               </div>
 
-              <div className="p-2 rounded bg-[#222950] border border-[#2A3362]">
+              <div className="p-2.5 rounded-lg bg-[#222950] border border-[#2A3362]">
                 <div className="text-[10px] text-[#7E85A6] uppercase font-mono">Native Retries</div>
-                <div className="text-xs font-mono text-[#B4B9D2]">
+                <div className="text-xs font-mono text-[#B4B9D2] mt-0.5">
                   {payment.native_retry_attempt} / 3 attempted
                 </div>
               </div>
 
-              <div className="p-2 rounded bg-[#222950] border border-[#2A3362]">
+              <div className="p-2.5 rounded-lg bg-[#222950] border border-[#2A3362]">
                 <div className="text-[10px] text-[#7E85A6] uppercase font-mono">Hist. Success Rate</div>
-                <div className="text-xs font-mono text-[#B4B9D2]">
+                <div className="text-xs font-mono text-[#B4B9D2] mt-0.5">
                   {formatPct(payment.historical_success_rate * 100)} ({payment.historical_cycle_count} cycles)
                 </div>
               </div>
@@ -231,39 +231,39 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
           </div>
 
           {/* Card B: Deterministic Failure Diagnosis */}
-          <div className="p-3.5 rounded-lg bg-[#171D36] border border-[#2A3362] space-y-3">
-            <div className="flex items-center justify-between border-b border-[#2A3362] pb-2">
-              <div className="text-xs font-mono font-semibold text-[#B4B9D2] uppercase flex items-center gap-1.5">
+          <div className="p-4.5 rounded-xl bg-[#171D36] border border-[#2A3362] space-y-3.5 shadow-sm">
+            <div className="flex items-center justify-between border-b border-[#2A3362] pb-2.5">
+              <div className="text-xs font-mono font-semibold text-[#B4B9D2] uppercase flex items-center gap-2">
                 <FileCheck className="w-3.5 h-3.5 text-[#E8A33D]" />
                 <span>Deterministic Diagnosis</span>
               </div>
-              <span className="text-[10px] font-mono text-[#E8A33D] bg-[#E8A33D]/10 px-1.5 py-0.5 rounded border border-[#E8A33D]/30">
+              <span className="text-[10px] font-mono text-[#E8A33D] bg-[#E8A33D]/10 px-2 py-0.5 rounded-md border border-[#E8A33D]/30 font-semibold">
                 Confidence: {(failure_diagnosis.confidence * 100).toFixed(0)}%
               </span>
             </div>
 
-            <div className="space-y-2 text-xs">
-              <div className="flex items-center justify-between p-2 rounded bg-[#222950] border border-[#2A3362]">
+            <div className="space-y-2.5 text-xs">
+              <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#222950] border border-[#2A3362]">
                 <span className="text-[#7E85A6]">Diagnosis Category:</span>
                 <span className="font-mono font-bold text-[#F2F0EA]">
                   {failure_diagnosis.failure_category}
                 </span>
               </div>
 
-              <div className="flex items-center justify-between p-2 rounded bg-[#222950] border border-[#2A3362]">
+              <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#222950] border border-[#2A3362]">
                 <span className="text-[#7E85A6]">Recoverability Class:</span>
                 <span className="font-mono font-bold text-[#F2F0EA]">
                   {failure_diagnosis.recoverability_class}
                 </span>
               </div>
 
-              <div className="p-2 rounded bg-[#222950] border border-[#2A3362] space-y-1">
+              <div className="p-2.5 rounded-lg bg-[#222950] border border-[#2A3362] space-y-1.5">
                 <span className="text-[10px] text-[#7E85A6] uppercase font-mono">Allowed Actions by Rail & Category:</span>
-                <div className="flex flex-wrap gap-1 mt-1">
+                <div className="flex flex-wrap gap-1.5 mt-1">
                   {failure_diagnosis.allowed_actions.map((act) => (
                     <span
                       key={act}
-                      className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#1B2140] text-[#E8A33D] border border-[#2A3362]"
+                      className="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-[#1B2140] text-[#E8A33D] border border-[#2A3362]"
                     >
                       {act}
                     </span>
@@ -272,7 +272,7 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
               </div>
 
               {failure_diagnosis.recommended_recovery_window_hours && (
-                <div className="flex items-center justify-between p-2 rounded bg-[#222950] border border-[#2A3362]">
+                <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#222950] border border-[#2A3362]">
                   <span className="text-[#7E85A6]">Recommended Cooldown:</span>
                   <span className="font-mono font-bold text-[#E8A33D]">
                     {failure_diagnosis.recommended_recovery_window_hours} hours
@@ -284,25 +284,25 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
         </div>
 
         {/* Row 3: Interpretable ML Propensity Signal */}
-        <div className="p-4 rounded-lg bg-[#171D36] border border-[#2A3362] space-y-3">
-          <div className="flex items-center justify-between border-b border-[#2A3362] pb-2">
-            <div className="text-xs font-mono font-semibold text-[#B4B9D2] uppercase flex items-center gap-1.5">
+        <div className="p-5 rounded-xl bg-[#171D36] border border-[#2A3362] space-y-3.5 shadow-sm">
+          <div className="flex items-center justify-between border-b border-[#2A3362] pb-2.5">
+            <div className="text-xs font-mono font-semibold text-[#B4B9D2] uppercase flex items-center gap-2">
               <Zap className="w-3.5 h-3.5 text-[#E8A33D]" />
               <span>Interpretable ML Propensity Model (Signal Only · Not Authority)</span>
             </div>
-            <span className="text-[10px] font-mono text-[#7E85A6]">
+            <span className="text-[10px] font-mono text-[#7E85A6] bg-[#222950] px-2 py-0.5 rounded border border-[#2A3362]">
               LogisticRegression Calibrated
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Propensity Gauge */}
-            <div className="p-3 rounded bg-[#222950] border border-[#2A3362] flex flex-col justify-center items-center text-center space-y-1">
+            <div className="p-4 rounded-xl bg-[#222950] border border-[#2A3362] flex flex-col justify-center items-center text-center space-y-1.5">
               <div className="text-xs text-[#7E85A6] font-mono">Propensity-to-Pay Score</div>
-              <div className="text-3xl font-bold font-mono text-[#E8A33D] tabular-nums">
+              <div className="text-3xl font-bold font-mono text-[#E8A33D] tabular-nums my-1">
                 {propensity_score.toFixed(3)}
               </div>
-              <div className="w-full bg-[#1B2140] h-2 rounded-full overflow-hidden mt-1 border border-[#2A3362]">
+              <div className="w-full bg-[#1B2140] h-2.5 rounded-full overflow-hidden mt-1 border border-[#2A3362]">
                 <div
                   className="h-full bg-gradient-to-r from-[#E8A33D] to-[#7BA88C]"
                   style={{ width: `${Math.min(100, Math.max(0, propensity_score * 100))}%` }}
@@ -314,9 +314,9 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
             </div>
 
             {/* Explanation Summary */}
-            <div className="md:col-span-2 p-3 rounded bg-[#222950] border border-[#2A3362] flex flex-col justify-center space-y-1.5">
-              <div className="text-xs font-mono text-[#7E85A6]">Structured Factor Analysis</div>
-              <div className="text-xs text-[#F2F0EA] font-mono whitespace-pre-line leading-relaxed bg-[#1B2140] p-2 rounded border border-[#2A3362]">
+            <div className="md:col-span-2 p-4 rounded-xl bg-[#222950] border border-[#2A3362] flex flex-col justify-center space-y-2">
+              <div className="text-xs font-mono text-[#7E85A6] font-medium">Structured Factor Analysis</div>
+              <div className="text-xs text-[#F2F0EA] font-mono whitespace-pre-line leading-relaxed bg-[#1B2140] p-3 rounded-lg border border-[#2A3362]">
                 {explanation_summary}
               </div>
             </div>
