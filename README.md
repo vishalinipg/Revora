@@ -18,7 +18,7 @@
 
 | Resource | Description | Target |
 | :--- | :--- | :--- |
-| 🚀 **Live Demo** | Cloud-hosted web application | `<DEPLOYED_LINK>` |
+| 🚀 **Live Demo** | Cloud-hosted web application | [https://revora-bice.vercel.app/](https://revora-bice.vercel.app/) |
 | 💻 **GitHub Repository** | Source code, test suites & architecture documentation | [https://github.com/vishalinipg/Revora](https://github.com/vishalinipg/Revora) |
 | 🎥 **Pitch / Demo Video** | Project overview and system demonstration | [https://www.youtube.com/@vishalinipg](https://www.youtube.com/@vishalinipg) |
 
