@@ -76,18 +76,39 @@ Revora was engineered to address four concrete objectives in recurring payment r
 
 ## ⚠️ Problem Statement
 
-As highlighted in the track brief:
-> *"Revenue loss rarely happens in one clean step. A payment degrades, a checkout gets abandoned, a subscription fails, or an invoice goes overdue. AI can now close the loop from detecting the problem to diagnosing it, choosing the right intervention, and recovering the money."*
+### 🎯 TRACK 03: AI Revenue Recovery
+> **Find revenue that’s slipping away and win it back**
+> 
+> Build an agent that detects revenue at risk, determines the right intervention, and executes a bounded recovery workflow: from payment failures and checkout abandonment to overdue receivables.
+> 
+> #### ⚡ WHY NOW
+> Revenue loss rarely happens in one clean step. A payment degrades, a checkout gets abandoned, a subscription fails, or an invoice goes overdue. AI can now close the loop from detecting the problem to diagnosing it, choosing the right intervention, and recovering the money.
+> 
+> #### 🧭 EXAMPLE DIRECTIONS
+> * `+` **Payment degradation → root cause → recovery action** *(Addressed by Revora)*
+> * `+` Checkout drop-off recovery
+> * `+` **Failed-subscription recovery** *(Addressed by Revora)*
+> * `+` B2B receivables chaser
+> * `+` **Mandate retry sequencer** *(Addressed by Revora)*
+> * `+` **Hinglish voice recovery** *(Addressed by Revora via Romanized Hinglish & Tanglish)*
+> * `+` Promise-to-pay tracker
+> 
+> #### 🏆 THE BAR
+> *Don’t just identify the problem. Show measured money recovered across a batch, with compliant escalation, stopping rules, and an audit trail.*
+
+---
+
+### The Recurring Payment Failure Modes Revora Solves
 
 In recurring subscription payments (UPI AutoPay & Cards), this degradation cycle triggers three critical failure modes:
 
-### 1. Revenue Leakage & Involuntary Churn
+#### 1. Revenue Leakage & Involuntary Churn
 Payments fail due to transient, recoverable conditions: temporary balance shortfall on scheduled auto-debit dates, NPCI switch timeouts, or Additional Factor of Authentication (AFA) renewal prompts. Blind systems either retry immediately and fail, or abandon the customer—causing involuntary churn for users who intended to stay subscribed.
 
-### 2. The Cost and Friction of Futile Retries
+#### 2. The Cost and Friction of Futile Retries
 Not every failed payment can or should be retried. Hard failures—such as expired e-mandates, bank cancellations, or blocked accounts—cannot succeed through simple re-attempts. Blind retry engines repeatedly hit dead accounts, generating unnecessary gateway fees, triggering bank penalties for customers, and damaging merchant authorization standing with card networks.
 
-### 3. The Fintech AI Safety Paradox
+#### 3. The Fintech AI Safety Paradox
 Applying unconstrained generative AI or black-box neural networks directly to payment operations introduces severe operational hazards: hallucinating retries on blocked accounts, altering transaction amounts, or generating outreach copy that solicits sensitive credentials (CVVs, passwords, or UPI PINs). Fintech systems require absolute deterministic boundaries.
 
 ---
