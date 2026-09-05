@@ -1,7 +1,9 @@
+<div align="center">
+
 # REVORA
 
 ### Adaptive Revenue Recovery for Recurring Payments
-> Recover legitimate recurring-payment revenue intelligently — while deterministic safety rules remain in control.
+Recover legitimate recurring-payment revenue intelligently — while deterministic safety rules remain in control.
 
 [![Buildathon](https://img.shields.io/badge/Razorpay%20Buildathon-2026-orange?style=flat-square)](https://github.com/vishalinipg/Revora)
 [![Track 03](https://img.shields.io/badge/Track%2003-AI%20Revenue%20Recovery-blue?style=flat-square)](https://github.com/vishalinipg/Revora)
@@ -9,6 +11,8 @@
 [![E2E Verification](https://img.shields.io/badge/E2E%20Verification-17%2F17%20Passed-cyan?style=flat-square)](https://github.com/vishalinipg/Revora)
 [![Next.js](https://img.shields.io/badge/Frontend-Next.js%2016-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI%201.0-009688?style=flat-square&logo=fastapi)](https://fastapi.tiangolo.com/)
+
+</div>
 
 > **Revora** is an adaptive recurring-payment recovery system that combines deterministic failure diagnosis and policy enforcement with interpretable ML propensity signals, constrained multilingual outreach, and simulation-based evaluation to recover revenue while avoiding futile retries and unsafe customer communication.
 
