@@ -76,8 +76,8 @@ export const HeroParticleNumeral: React.FC<HeroParticleNumeralProps> = ({
       ctx.fillStyle = "#ffffff";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      // Render clean monospace glyphs for exact sampling
-      ctx.font = 'bold 140px "JetBrains Mono", monospace';
+      // Render clean, modern bold glyphs for crisp sampling
+      ctx.font = 'bold 136px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "JetBrains Mono", monospace';
       ctx.fillText(displayNumeral, sampleCanvas.width / 2, sampleCanvas.height / 2);
 
       const imgData = ctx.getImageData(0, 0, sampleCanvas.width, sampleCanvas.height);
@@ -86,8 +86,8 @@ export const HeroParticleNumeral: React.FC<HeroParticleNumeralProps> = ({
 
       let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
 
-      // Step sampling with density check
-      const step = 4;
+      // Crisp step-3 sampling for sharp glyph edges
+      const step = 3;
       for (let y = 0; y < sampleCanvas.height; y += step) {
         for (let x = 0; x < sampleCanvas.width; x += step) {
           const index = (y * sampleCanvas.width + x) * 4;
@@ -104,15 +104,15 @@ export const HeroParticleNumeral: React.FC<HeroParticleNumeralProps> = ({
       // Calculate centroid of the actual glyph bounding box
       const midX = (minX + maxX) / 2;
       const midY = (minY + maxY) / 2;
-      const scaleFactor = 0.185;
+      const scaleFactor = 0.175;
 
-      // Sample exactly PARTICLE_COUNT points centered at (0, 0)
+      // Sample exactly PARTICLE_COUNT points centered at (0, 0) with crisp alignment
       if (validPixels.length > 0) {
         for (let i = 0; i < PARTICLE_COUNT; i++) {
           const idx = Math.floor(Math.random() * validPixels.length);
           targetPoints.push({
-            x: (validPixels[idx].x - midX) * scaleFactor + (Math.random() - 0.5) * 0.3,
-            y: -(validPixels[idx].y - midY) * scaleFactor + (Math.random() - 0.5) * 0.3,
+            x: (validPixels[idx].x - midX) * scaleFactor + (Math.random() - 0.5) * 0.15,
+            y: -(validPixels[idx].y - midY) * scaleFactor + (Math.random() - 0.5) * 0.15,
           });
         }
       }
@@ -176,29 +176,30 @@ export const HeroParticleNumeral: React.FC<HeroParticleNumeralProps> = ({
     geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
-    // Particle texture (soft circular dot)
+    // Particle texture (crisp luminous circular point with warm halo)
     const pCanvas = document.createElement("canvas");
-    pCanvas.width = 32;
-    pCanvas.height = 32;
+    pCanvas.width = 64;
+    pCanvas.height = 64;
     const pCtx = pCanvas.getContext("2d");
     if (pCtx) {
-      const grad = pCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
-      grad.addColorStop(0, "rgba(255,255,255,1)");
-      grad.addColorStop(0.4, "rgba(255,255,255,0.85)");
-      grad.addColorStop(1, "rgba(255,255,255,0)");
+      const grad = pCtx.createRadialGradient(32, 32, 0, 32, 32, 32);
+      grad.addColorStop(0, "rgba(255, 255, 255, 1)");
+      grad.addColorStop(0.25, "rgba(255, 245, 220, 0.95)");
+      grad.addColorStop(0.55, "rgba(232, 163, 61, 0.4)");
+      grad.addColorStop(1, "rgba(0, 0, 0, 0)");
       pCtx.fillStyle = grad;
       pCtx.beginPath();
-      pCtx.arc(16, 16, 16, 0, Math.PI * 2);
+      pCtx.arc(32, 32, 32, 0, Math.PI * 2);
       pCtx.fill();
     }
     const pTexture = new THREE.CanvasTexture(pCanvas);
 
     const material = new THREE.PointsMaterial({
-      size: 1.8,
+      size: 2.2,
       vertexColors: true,
       map: pTexture,
       transparent: true,
-      opacity: 0.95,
+      opacity: 0.98,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
@@ -323,11 +324,13 @@ export const HeroParticleNumeral: React.FC<HeroParticleNumeralProps> = ({
           className="absolute inset-0 w-full h-full pointer-events-none z-0"
         />
 
-        {/* Semantic h1 overlay for accessibility, SEO, and crisp legibility */}
+        {/* Semantic h1 for accessibility, SEO, and reduced-motion fallback */}
         <h1
           data-testid="hero-headline-numeral"
-          className={`relative z-10 font-mono font-bold tracking-tight text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-[#F2F0EA] drop-shadow-lg tabular-nums transition-opacity duration-1000 ${
-            animationCompleted || isReducedMotion ? "opacity-95" : "opacity-40"
+          className={`font-mono font-bold tracking-tight text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-[#F2F0EA] drop-shadow-2xl tabular-nums ${
+            isReducedMotion
+              ? "relative z-10 opacity-100"
+              : "sr-only"
           }`}
           style={{ textShadow: "0 4px 30px rgba(0,0,0,0.8)" }}
         >
