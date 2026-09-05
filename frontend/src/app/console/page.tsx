@@ -4,15 +4,9 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Header } from "../../components/Header";
 import { MetricsOverview } from "../../components/MetricsOverview";
 import { PaymentQueue } from "../../components/PaymentQueue";
-import { DecisionInspector } from "../../components/DecisionInspector";
-import { CustomerTimeline } from "../../components/CustomerTimeline";
-import { MockOutboxModal } from "../../components/MockOutboxModal";
 import { BenchmarkModal } from "../../components/BenchmarkModal";
 import {
   PaginatedPaymentsResponse,
-  PaymentDetailResponse,
-  DecisionResponse,
-  PaymentTimelineResponse,
   EvaluationSummaryResponse,
 } from "../../lib/types";
 import { api } from "../../lib/api";
@@ -37,24 +31,8 @@ export default function OperatorConsolePage() {
     failureCode: "",
   });
 
-  // Selected Payment & Detail State
+  // Selected Payment State
   const [selectedPaymentId, setSelectedPaymentId] = useState<string | null>(null);
-  const [paymentDetail, setPaymentDetail] = useState<PaymentDetailResponse | null>(null);
-  const [isLoadingDetail, setIsLoadingDetail] = useState(false);
-  const [detailError, setDetailError] = useState<string | null>(null);
-
-  // Live Decision Execution State
-  const [isExecutingDecision, setIsExecutingDecision] = useState(false);
-  const [lastDecisionResult, setLastDecisionResult] = useState<DecisionResponse | null>(null);
-
-  // Timeline State & Modal
-  const [isTimelineOpen, setIsTimelineOpen] = useState(false);
-  const [timelineData, setTimelineData] = useState<PaymentTimelineResponse | null>(null);
-  const [isLoadingTimeline, setIsLoadingTimeline] = useState(false);
-  const [timelineError, setTimelineError] = useState<string | null>(null);
-
-  // Outbox Preview Modal
-  const [isOutboxOpen, setIsOutboxOpen] = useState(false);
 
   // Benchmark / Multi-Seed Robustness Modal
   const [isBenchmarkOpen, setIsBenchmarkOpen] = useState(false);
@@ -87,7 +65,6 @@ export default function OperatorConsolePage() {
       });
       setPaymentsData(data);
 
-      // Auto-select first payment if none currently selected
       if (data.items.length > 0 && !selectedPaymentId) {
         setSelectedPaymentId(data.items[0].payment_id);
       }
@@ -98,71 +75,11 @@ export default function OperatorConsolePage() {
     }
   }, [page, filters, selectedPaymentId]);
 
-  // 3. Fetch Selected Payment Detail
-  const fetchPaymentDetail = useCallback(async (id: string) => {
-    setIsLoadingDetail(true);
-    setDetailError(null);
-    try {
-      const detail = await api.getPaymentDetail(id);
-      setPaymentDetail(detail);
-    } catch (err: any) {
-      setDetailError(err.message || "Failed to fetch payment details.");
-    } finally {
-      setIsLoadingDetail(false);
-    }
-  }, []);
-
-  // 4. Trigger Live Decision Engine Re-run
-  const handleExecuteDecision = async (): Promise<DecisionResponse | null> => {
-    if (!selectedPaymentId) return null;
-    setIsExecutingDecision(true);
-    try {
-      const result = await api.evaluateDecision(selectedPaymentId);
-      setLastDecisionResult(result);
-      // Refresh details to update state
-      fetchPaymentDetail(selectedPaymentId);
-      // Refresh metrics as this creates an audit record
-      fetchMetrics();
-      return result;
-    } catch (err: any) {
-      alert(`Decision Engine execution failed: ${err.message}`);
-      return null;
-    } finally {
-      setIsExecutingDecision(false);
-    }
-  };
-
-  // 5. Open Timeline
-  const handleOpenTimeline = async () => {
-    if (!selectedPaymentId) return;
-    setIsTimelineOpen(true);
-    setIsLoadingTimeline(true);
-    setTimelineError(null);
-    try {
-      const data = await api.getPaymentTimeline(selectedPaymentId);
-      setTimelineData(data);
-    } catch (err: any) {
-      setTimelineError(err.message || "Failed to load payment timeline.");
-    } finally {
-      setIsLoadingTimeline(false);
-    }
-  };
-
-  // Initial Load
+  // Initial Data Load
   useEffect(() => {
     fetchMetrics();
-  }, [fetchMetrics]);
-
-  useEffect(() => {
     fetchPayments();
-  }, [fetchPayments]);
-
-  useEffect(() => {
-    if (selectedPaymentId) {
-      fetchPaymentDetail(selectedPaymentId);
-      setLastDecisionResult(null);
-    }
-  }, [selectedPaymentId, fetchPaymentDetail]);
+  }, [fetchMetrics, fetchPayments]);
 
   const handleSelectPayment = (id: string) => {
     setSelectedPaymentId(id);
@@ -170,13 +87,12 @@ export default function OperatorConsolePage() {
 
   const handleFilterChange = (newFilters: { status: string; rail: string; failureCode: string }) => {
     setFilters(newFilters);
-    setPage(0); // Reset to first page
+    setPage(0);
   };
 
   const handleRefreshAll = () => {
     fetchMetrics();
     fetchPayments();
-    if (selectedPaymentId) fetchPaymentDetail(selectedPaymentId);
   };
 
   return (
@@ -216,41 +132,8 @@ export default function OperatorConsolePage() {
               onRetry={fetchPayments}
             />
           </div>
-
-          {/* Signal & Decision Inspector */}
-          <div className="w-full">
-            <DecisionInspector
-              paymentDetail={paymentDetail}
-              isLoading={isLoadingDetail}
-              error={detailError}
-              onRerunDecision={handleExecuteDecision}
-              isExecutingDecision={isExecutingDecision}
-              onOpenOutreach={() => setIsOutboxOpen(true)}
-              onOpenTimeline={handleOpenTimeline}
-              lastDecisionResult={lastDecisionResult}
-            />
-          </div>
         </section>
       </main>
-
-      {/* Audit Timeline Drawer / Modal */}
-      {isTimelineOpen && (
-        <CustomerTimeline
-          timeline={timelineData}
-          isLoading={isLoadingTimeline}
-          error={timelineError}
-          onClose={() => setIsTimelineOpen(false)}
-          paymentId={selectedPaymentId || ""}
-        />
-      )}
-
-      {/* Simulated Multilingual Outbox Modal */}
-      {isOutboxOpen && selectedPaymentId && (
-        <MockOutboxModal
-          paymentId={selectedPaymentId}
-          onClose={() => setIsOutboxOpen(false)}
-        />
-      )}
 
       {/* Multi-Seed Evaluation & Benchmark Modal */}
       {isBenchmarkOpen && (

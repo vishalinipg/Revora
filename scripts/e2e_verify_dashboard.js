@@ -83,9 +83,14 @@ async function runVerification() {
     // Capture Screenshot 2: Payment Queue
     await saveScreenshot(page, "02_payment_queue.png");
 
-    // 3. Inspect Payment Detail & Decision Inspector
+    // 3. Inspect Payment Detail & Decision Inspector via dedicated page
+    console.log("Clicking Inspect button to navigate to dedicated payment inspection page...");
+    await page.waitForSelector('[data-testid^="inspect-btn-"]', { timeout: 10000 });
+    const inspectBtn = await page.$('[data-testid^="inspect-btn-"]');
+    await inspectBtn.click();
+
     await page.waitForSelector('[data-testid="rerun-decision-btn"]', { timeout: 10000 });
-    const inspectorText = await page.$eval("section[aria-label='Payment Operations Console'] > div:nth-of-type(2)", (el) => el.textContent);
+    const inspectorText = await page.$eval("section[aria-label='Payment Operations Console']", (el) => el.textContent);
     const hasSignals = inspectorText.includes("Observed Provider Signals") || inspectorText.includes("Amount Due") || inspectorText.includes("Tier 1");
     const hasDiagnosis = inspectorText.includes("Deterministic Diagnosis") || inspectorText.includes("Confidence");
     const hasPropensity = inspectorText.includes("Propensity-to-Pay Score") || inspectorText.includes("Propensity");
@@ -96,12 +101,12 @@ async function runVerification() {
     console.log(`[VERIFY] Decision Inspector loaded: ${results["Decision Inspector Data"]}`);
 
     // 4. Test Re-run Decision Engine Live
-    console.log("Triggering live Decision Engine execution...");
+    console.log("Triggering live Decision Engine execution on dedicated inspection page...");
     const rerunBtn = await page.waitForSelector('[data-testid="rerun-decision-btn"]');
     await rerunBtn.click();
     await new Promise((r) => setTimeout(r, 1500));
 
-    const afterRerunText = await page.$eval("section[aria-label='Payment Operations Console'] > div:nth-of-type(2)", (el) => el.textContent);
+    const afterRerunText = await page.$eval("section[aria-label='Payment Operations Console']", (el) => el.textContent);
     const hasDecisionLogged = afterRerunText.includes("Live Decision Logged");
     results["Re-run Engine Execution"] = hasDecisionLogged ? "PASS" : "FAIL";
     console.log(`[VERIFY] Re-run Engine audit log check: ${results["Re-run Engine Execution"]}`);
@@ -110,7 +115,7 @@ async function runVerification() {
     await saveScreenshot(page, "03_decision_inspector_rerun.png");
 
     // 5. Test Customer Timeline
-    console.log("Opening Customer Timeline modal...");
+    console.log("Opening Customer Timeline modal on inspection page...");
     const timelineBtn = await page.waitForSelector('[data-testid="timeline-btn"]');
     await timelineBtn.click();
     await page.waitForSelector('[data-testid="close-timeline-btn"]', { timeout: 5000 });
@@ -131,12 +136,9 @@ async function runVerification() {
     await new Promise((r) => setTimeout(r, 500));
 
     // 6. Test Outreach Preview on Approved Recovery Action (Simulated Outbox)
-    console.log("Selecting payment with approved outreach action...");
-    const rows = await page.$$("table tbody tr");
-    if (rows.length > 1) {
-      await rows[1].click(); // Select pay_rev_00752 (insufficient_funds -> approved action)
-      await new Promise((r) => setTimeout(r, 1000));
-    }
+    console.log("Navigating to payment with approved outreach action (pay_rev_00752)...");
+    await page.goto("http://127.0.0.1:3000/console/inspect/pay_rev_00752", { waitUntil: "networkidle0" });
+    await page.waitForSelector('[data-testid="preview-outreach-btn"]', { timeout: 10000 });
 
     console.log("Opening Outreach Preview modal...");
     const outreachBtn = await page.waitForSelector('[data-testid="preview-outreach-btn"]');
@@ -158,44 +160,32 @@ async function runVerification() {
     await new Promise((r) => setTimeout(r, 500));
 
     // 7. Test STOP / HUMAN_ESCALATION Outreach Suppression
-    console.log("Testing outreach suppression on hard failure (blocked_account)...");
-    // Filter by blocked_account to find a suppressed payment
-    await page.select("select:nth-of-type(3)", "blocked_account");
-    await new Promise((r) => setTimeout(r, 1500));
+    console.log("Navigating to suppressed payment (blocked_account pay_rev_00117)...");
+    await page.goto("http://127.0.0.1:3000/console/inspect/pay_rev_00117", { waitUntil: "networkidle0" });
+    await page.waitForSelector('[data-testid="preview-outreach-btn"]', { timeout: 10000 });
 
-    const blockedRows = await page.$$("table tbody tr");
-    if (blockedRows.length > 0) {
-      await blockedRows[0].click();
-      await new Promise((r) => setTimeout(r, 1000));
-
-      // Click Preview Outreach on suppressed payment
-      const outreachBtn2 = await page.waitForSelector('[data-testid="preview-outreach-btn"]');
-      await outreachBtn2.click();
-      await page.waitForSelector('[data-testid="close-outbox-btn"]', { timeout: 5000 });
-      await new Promise((r) => setTimeout(r, 1000));
-
-      const suppressedOutboxText = await page.$eval("div.fixed", (el) => el.textContent);
-      const isSuppressed = suppressedOutboxText.includes("Outreach Suppressed by Revora Policy") || suppressedOutboxText.includes("Zero Messages Dispatched") || suppressedOutboxText.includes("suppressed");
-      results["Outreach Suppression Enforcement"] = isSuppressed ? "PASS" : "FAIL";
-      console.log(`[VERIFY] Outreach suppression enforcement: ${results["Outreach Suppression Enforcement"]}`);
-
-      // Capture Screenshot 6: Outreach Suppressed State
-      await saveScreenshot(page, "06_outreach_suppressed.png");
-
-      const closeOutboxBtn2 = await page.waitForSelector('[data-testid="close-outbox-btn"]');
-      await closeOutboxBtn2.click();
-      await new Promise((r) => setTimeout(r, 500));
-    } else {
-      results["Outreach Suppression Enforcement"] = "NOT TESTED (No blocked_account rows in batch)";
-    }
-
-    // Reset filter
-    await page.select("select:nth-of-type(3)", "");
+    // Click Preview Outreach on suppressed payment
+    const outreachBtn2 = await page.waitForSelector('[data-testid="preview-outreach-btn"]');
+    await outreachBtn2.click();
+    await page.waitForSelector('[data-testid="close-outbox-btn"]', { timeout: 5000 });
     await new Promise((r) => setTimeout(r, 1000));
 
+    const suppressedOutboxText = await page.$eval("div.fixed", (el) => el.textContent);
+    const isSuppressed = suppressedOutboxText.includes("Outreach Suppressed by Revora Policy") || suppressedOutboxText.includes("Zero Messages Dispatched") || suppressedOutboxText.includes("suppressed");
+    results["Outreach Suppression Enforcement"] = isSuppressed ? "PASS" : "FAIL";
+    console.log(`[VERIFY] Outreach suppression enforcement: ${results["Outreach Suppression Enforcement"]}`);
+
+    // Capture Screenshot 6: Outreach Suppressed State
+    await saveScreenshot(page, "06_outreach_suppressed.png");
+
+    const closeOutboxBtn2 = await page.waitForSelector('[data-testid="close-outbox-btn"]');
+    await closeOutboxBtn2.click();
+    await new Promise((r) => setTimeout(r, 500));
+
     // 8. Test Multi-Seed Benchmark Modal
-    console.log("Opening Multi-Seed Benchmark modal...");
-    const benchmarkBtn = await page.waitForSelector('[data-testid="open-benchmark-btn"]');
+    console.log("Navigating back to /console for Multi-Seed Benchmark modal...");
+    await page.goto("http://127.0.0.1:3000/console", { waitUntil: "networkidle0" });
+    const benchmarkBtn = await page.waitForSelector('[data-testid="open-benchmark-btn"]', { timeout: 10000 });
     await benchmarkBtn.click();
     await page.waitForSelector('[data-testid="close-benchmark-btn"]', { timeout: 5000 });
     // Wait for benchmarks to finish loading and table to render

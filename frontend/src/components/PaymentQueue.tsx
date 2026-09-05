@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, Filter, ChevronLeft, ChevronRight, AlertCircle, RefreshCw, CheckCircle2 } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Search, Filter, ChevronLeft, ChevronRight, AlertCircle, RefreshCw, CheckCircle2, ExternalLink } from "lucide-react";
 import { PaymentRead, PaginatedPaymentsResponse } from "../lib/types";
 import { formatINR, formatDateTime, getPaymentStatusBadge, getRailLabel } from "../lib/utils";
 
@@ -36,6 +38,7 @@ export const PaymentQueue: React.FC<PaymentQueueProps> = ({
   onPageChange,
   onRetry,
 }) => {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
 
   const items = data?.items || [];
@@ -129,7 +132,7 @@ export const PaymentQueue: React.FC<PaymentQueueProps> = ({
       </div>
 
       {/* Table Content */}
-      <div className="flex-1 overflow-x-auto overflow-y-auto max-h-[480px]">
+      <div className="flex-1 overflow-x-auto overflow-y-auto max-h-[580px] min-h-[440px]">
         {isLoading ? (
           <div className="p-12 text-center space-y-3">
             <RefreshCw className="w-7 h-7 text-[#E8A33D] animate-spin mx-auto" />
@@ -165,6 +168,7 @@ export const PaymentQueue: React.FC<PaymentQueueProps> = ({
                 <th className="py-3.5 px-4 font-medium whitespace-nowrap">Failure Code</th>
                 <th className="py-3.5 px-4 font-medium text-center whitespace-nowrap">Retries</th>
                 <th className="py-3.5 px-4 font-medium text-center whitespace-nowrap">Status</th>
+                <th className="py-3.5 px-4 font-medium text-center whitespace-nowrap">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#222950]">
@@ -175,7 +179,10 @@ export const PaymentQueue: React.FC<PaymentQueueProps> = ({
                 return (
                   <tr
                     key={payment.payment_id}
-                    onClick={() => onSelectPayment(payment.payment_id)}
+                    onClick={() => {
+                      onSelectPayment(payment.payment_id);
+                      router.push(`/console/inspect/${payment.payment_id}`);
+                    }}
                     className={`cursor-pointer transition-colors ${
                       isSelected
                         ? "bg-[#222950] border-l-4 border-l-[#E8A33D]"
@@ -238,6 +245,19 @@ export const PaymentQueue: React.FC<PaymentQueueProps> = ({
                       <span className={`inline-block px-3 py-0.5 rounded-full text-[10px] font-mono font-medium ${statusBadge.className}`}>
                         {statusBadge.label}
                       </span>
+                    </td>
+
+                    {/* Inspect Button Action */}
+                    <td className="py-3.5 px-4 text-center whitespace-nowrap">
+                      <Link
+                        href={`/console/inspect/${payment.payment_id}`}
+                        data-testid={`inspect-btn-${payment.payment_id}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-mono font-semibold bg-[#222950] hover:bg-[#E8A33D] hover:text-[#12172B] text-[#F2F0EA] border border-[#2A3362] hover:border-[#E8A33D] transition-all cursor-pointer shadow-sm group"
+                      >
+                        <span>Inspect</span>
+                        <ExternalLink className="w-3 h-3 text-[#E8A33D] group-hover:text-[#12172B] transition-colors" />
+                      </Link>
                     </td>
                   </tr>
                 );
