@@ -106,43 +106,39 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
       {/* Main Inspection Body */}
       <div className="flex-1 overflow-y-auto p-5 space-y-5">
         {/* Row 1: Decision Banner & Execution Controls */}
-        <div className="p-5 rounded-xl bg-[#222950] border border-[#2A3362] relative overflow-hidden shadow-sm">
-          <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-xs font-mono text-[#7E85A6] uppercase">
-                <Cpu className="w-4 h-4 text-[#E8A33D]" />
-                <span className="font-semibold text-[#B4B9D2]">Deterministic Revora Decision Engine</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-md bg-[#1B2140] text-[#B4B9D2] border border-[#2A3362]">
-                  {lastDecisionResult?.policy_version || "revora_policy_v1"}
-                </span>
+        <div className="p-5 rounded-xl bg-[#222950] border border-[#2A3362] relative overflow-hidden shadow-sm space-y-4">
+          {/* Top Row: Engine Identity & Operator Action Buttons */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3.5 pb-3.5 border-b border-[#2A3362]/70">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-[#1B2140] border border-[#2A3362] text-[#E8A33D] flex items-center justify-center flex-shrink-0">
+                <Cpu className="w-4 h-4" />
               </div>
-
-              <div className="flex flex-wrap items-center gap-3">
-                <span className={`px-3.5 py-1.5 rounded-lg text-sm font-mono font-bold tracking-wide shadow-sm ${actionBadge.className}`}>
-                  {actionBadge.label}
+              <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+                <span className="font-semibold text-xs font-mono text-[#F2F0EA] tracking-wide uppercase whitespace-nowrap">
+                  Deterministic Revora Decision Engine
                 </span>
-                <span className="text-xs text-[#B4B9D2] max-w-xl leading-relaxed">
-                  {lastDecisionResult?.decision_reason || latest_action?.decision_reason || "Deterministic policy evaluation ready."}
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#1B2140] text-[#B4B9D2] border border-[#2A3362] whitespace-nowrap">
+                  {lastDecisionResult?.policy_version || "REVORA_POLICY_V1"}
                 </span>
               </div>
             </div>
 
-            {/* Operator Actions */}
-            <div className="flex flex-wrap items-center gap-2.5 pt-2 xl:pt-0">
+            {/* Operator Actions in a clean, unified button group */}
+            <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap">
               <button
                 data-testid="rerun-decision-btn"
                 onClick={onRerunDecision}
                 disabled={isExecutingDecision}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold bg-[#E8A33D] hover:bg-[#E8A33D]/90 text-[#12172B] shadow-sm transition-all disabled:opacity-50 font-mono cursor-pointer"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#E8A33D] hover:bg-[#E8A33D]/90 text-[#12172B] shadow-sm transition-all disabled:opacity-50 font-mono cursor-pointer whitespace-nowrap flex-shrink-0"
               >
                 <Play className={`w-3.5 h-3.5 fill-current ${isExecutingDecision ? "animate-spin" : ""}`} />
-                <span>{isExecutingDecision ? "Executing Policy..." : "Re-run Engine"}</span>
+                <span>{isExecutingDecision ? "Executing..." : "Re-run Engine"}</span>
               </button>
 
               <button
                 data-testid="preview-outreach-btn"
                 onClick={onOpenOutreach}
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium bg-[#1B2140] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#1B2140] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] transition-colors cursor-pointer whitespace-nowrap flex-shrink-0"
               >
                 <MessageSquare className="w-3.5 h-3.5 text-[#E8A33D]" />
                 <span>Preview Outreach</span>
@@ -151,11 +147,26 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
               <button
                 data-testid="timeline-btn"
                 onClick={onOpenTimeline}
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium bg-[#1B2140] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#1B2140] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] transition-colors cursor-pointer whitespace-nowrap flex-shrink-0"
               >
                 <History className="w-3.5 h-3.5 text-[#B4B9D2]" />
                 <span>Timeline</span>
               </button>
+            </div>
+          </div>
+
+          {/* Dedicated Decision Callout Strip */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 bg-[#171D36] p-3.5 rounded-lg border border-[#2A3362]/80">
+            <div className="flex items-center gap-2.5">
+              <span className="text-[11px] font-mono text-[#7E85A6] uppercase tracking-wider whitespace-nowrap">
+                Action:
+              </span>
+              <span className={`inline-block px-3.5 py-1 rounded-md text-xs font-mono font-bold tracking-wider uppercase shadow-sm whitespace-nowrap ${actionBadge.className}`}>
+                {actionBadge.label}
+              </span>
+            </div>
+            <div className="text-xs text-[#B4B9D2] leading-relaxed sm:text-right flex-1 sm:max-w-xl">
+              {lastDecisionResult?.decision_reason || latest_action?.decision_reason || "Deterministic policy evaluation ready."}
             </div>
           </div>
 

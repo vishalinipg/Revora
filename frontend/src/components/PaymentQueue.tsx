@@ -73,8 +73,8 @@ export const PaymentQueue: React.FC<PaymentQueueProps> = ({
           </div>
         </div>
 
-        {/* Filter Toolbar: Spacious 2-column ergonomic layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        {/* Filter Toolbar: Full-width 4-column layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {/* Instant Search */}
           <div className="relative">
             <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#7E85A6]" />
@@ -129,7 +129,7 @@ export const PaymentQueue: React.FC<PaymentQueueProps> = ({
       </div>
 
       {/* Table Content */}
-      <div className="flex-1 overflow-x-auto overflow-y-auto min-h-[420px]">
+      <div className="flex-1 overflow-x-auto overflow-y-auto max-h-[480px]">
         {isLoading ? (
           <div className="p-12 text-center space-y-3">
             <RefreshCw className="w-7 h-7 text-[#E8A33D] animate-spin mx-auto" />
@@ -158,13 +158,13 @@ export const PaymentQueue: React.FC<PaymentQueueProps> = ({
           <table className="w-full text-left text-xs border-collapse">
             <thead className="bg-[#171D36] text-[#B4B9D2] font-mono text-[11px] sticky top-0 border-b border-[#2A3362] z-10">
               <tr>
-                <th className="py-3 px-3.5 font-medium whitespace-nowrap">Payment ID</th>
-                <th className="py-3 px-3 font-medium whitespace-nowrap">Customer / Mandate</th>
-                <th className="py-3 px-3 font-medium text-right whitespace-nowrap">Amount (₹)</th>
-                <th className="py-3 px-2.5 font-medium whitespace-nowrap">Rail</th>
-                <th className="py-3 px-2.5 font-medium whitespace-nowrap">Failure Code</th>
-                <th className="py-3 px-2 font-medium text-center whitespace-nowrap">Retries</th>
-                <th className="py-3 px-3 font-medium text-center whitespace-nowrap">Status</th>
+                <th className="py-3.5 px-4 font-medium whitespace-nowrap">Payment ID</th>
+                <th className="py-3.5 px-4 font-medium whitespace-nowrap">Customer / Mandate</th>
+                <th className="py-3.5 px-4 font-medium text-right whitespace-nowrap">Amount (₹)</th>
+                <th className="py-3.5 px-4 font-medium whitespace-nowrap">Rail</th>
+                <th className="py-3.5 px-4 font-medium whitespace-nowrap">Failure Code</th>
+                <th className="py-3.5 px-4 font-medium text-center whitespace-nowrap">Retries</th>
+                <th className="py-3.5 px-4 font-medium text-center whitespace-nowrap">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#222950]">
@@ -178,12 +178,12 @@ export const PaymentQueue: React.FC<PaymentQueueProps> = ({
                     onClick={() => onSelectPayment(payment.payment_id)}
                     className={`cursor-pointer transition-colors ${
                       isSelected
-                        ? "bg-[#222950] border-l-3 border-l-[#E8A33D]"
+                        ? "bg-[#222950] border-l-4 border-l-[#E8A33D]"
                         : "hover:bg-[#1E2548]"
                     }`}
                   >
                     {/* Payment ID & Timestamp */}
-                    <td className="py-3 px-3.5 font-mono whitespace-nowrap">
+                    <td className="py-3.5 px-4 font-mono whitespace-nowrap">
                       <div className="font-semibold text-[#F2F0EA]">
                         {payment.payment_id}
                       </div>
@@ -193,7 +193,7 @@ export const PaymentQueue: React.FC<PaymentQueueProps> = ({
                     </td>
 
                     {/* Customer & Mandate */}
-                    <td className="py-3 px-3 font-mono whitespace-nowrap">
+                    <td className="py-3.5 px-4 font-mono whitespace-nowrap">
                       <div className="text-[#B4B9D2] text-[11px]">
                         {payment.customer_id}
                       </div>
@@ -203,19 +203,19 @@ export const PaymentQueue: React.FC<PaymentQueueProps> = ({
                     </td>
 
                     {/* Amount */}
-                    <td className="py-3 px-3 text-right font-mono font-bold text-[#F2F0EA] tabular-nums whitespace-nowrap">
+                    <td className="py-3.5 px-4 text-right font-mono font-bold text-[#F2F0EA] tabular-nums whitespace-nowrap">
                       {formatINR(payment.amount)}
                     </td>
 
                     {/* Rail */}
-                    <td className="py-3 px-2.5 whitespace-nowrap">
-                      <span className="inline-block px-2 py-0.5 rounded text-[10px] font-mono bg-[#222950] text-[#B4B9D2] border border-[#2A3362]">
+                    <td className="py-3.5 px-4 whitespace-nowrap">
+                      <span className="inline-block px-2.5 py-0.5 rounded text-[10px] font-mono bg-[#222950] text-[#B4B9D2] border border-[#2A3362]">
                         {getRailLabel(payment.payment_rail)}
                       </span>
                     </td>
 
                     {/* Failure Code */}
-                    <td className="py-3 px-2.5 font-mono whitespace-nowrap">
+                    <td className="py-3.5 px-4 font-mono whitespace-nowrap">
                       {payment.failure_code ? (
                         <span className="text-[#E8A33D] text-[11px]">
                           {payment.failure_code}
@@ -226,7 +226,7 @@ export const PaymentQueue: React.FC<PaymentQueueProps> = ({
                     </td>
 
                     {/* Retries */}
-                    <td className="py-3 px-2 text-center font-mono text-[11px] text-[#B4B9D2] whitespace-nowrap">
+                    <td className="py-3.5 px-4 text-center font-mono text-[11px] text-[#B4B9D2] whitespace-nowrap">
                       <span className={payment.native_retry_attempt >= 3 ? "text-[#B5615A] font-bold" : ""}>
                         {payment.native_retry_attempt}
                       </span>
@@ -234,8 +234,8 @@ export const PaymentQueue: React.FC<PaymentQueueProps> = ({
                     </td>
 
                     {/* Status */}
-                    <td className="py-3 px-3 text-center whitespace-nowrap">
-                      <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium ${statusBadge.className}`}>
+                    <td className="py-3.5 px-4 text-center whitespace-nowrap">
+                      <span className={`inline-block px-3 py-0.5 rounded-full text-[10px] font-mono font-medium ${statusBadge.className}`}>
                         {statusBadge.label}
                       </span>
                     </td>

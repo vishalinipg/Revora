@@ -198,10 +198,10 @@ export default function OperatorConsolePage() {
           onRetry={fetchMetrics}
         />
 
-        {/* 2-Column Balanced Ergonomic Workstation Layout */}
-        <section aria-label="Payment Operations Console" className="flex-1 grid grid-cols-1 xl:grid-cols-12 gap-5 min-h-[620px]">
-          {/* Left Column: At-Risk Payments Queue (6 cols on xl for roomy table) */}
-          <div className="xl:col-span-6 h-full min-h-[540px]">
+        {/* Full-Length Payment Operations Console Workspace */}
+        <section aria-label="Payment Operations Console" className="flex-1 flex flex-col gap-6 w-full">
+          {/* Full-Length Recurring Payments Queue Table */}
+          <div className="w-full">
             <PaymentQueue
               data={paymentsData}
               isLoading={isLoadingPayments}
@@ -217,8 +217,8 @@ export default function OperatorConsolePage() {
             />
           </div>
 
-          {/* Right Column: Signal & Decision Inspector (6 cols on xl) */}
-          <div className="xl:col-span-6 h-full min-h-[540px]">
+          {/* Signal & Decision Inspector */}
+          <div className="w-full">
             <DecisionInspector
               paymentDetail={paymentDetail}
               isLoading={isLoadingDetail}
