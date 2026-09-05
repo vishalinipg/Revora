@@ -1,0 +1,168 @@
+"use client";
+
+import React from "react";
+import { TrendingUp, DollarSign, ShieldCheck, AlertTriangle, Layers, ArrowUpRight, ArrowDownRight, RefreshCw } from "lucide-react";
+import { EvaluationSummaryResponse } from "../lib/types";
+import { formatINR, formatPct } from "../lib/utils";
+
+interface MetricsOverviewProps {
+  data: EvaluationSummaryResponse | null;
+  isLoading: boolean;
+  error: string | null;
+  onRetry: () => void;
+}
+
+export const MetricsOverview: React.FC<MetricsOverviewProps> = ({
+  data,
+  isLoading,
+  error,
+  onRetry,
+}) => {
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+        {[1, 2, 3, 4, 5].map((i) => (
+          <div
+            key={i}
+            className="p-4 rounded-lg bg-[#1B2140] border border-[#2A3362] animate-pulse space-y-2.5"
+          >
+            <div className="h-3 w-24 bg-[#222950] rounded" />
+            <div className="h-7 w-32 bg-[#28315E] rounded" />
+            <div className="h-2.5 w-full bg-[#222950] rounded" />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className="p-4 rounded-lg bg-[#B5615A]/10 border border-[#B5615A]/30 text-[#B5615A] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5">
+          <AlertTriangle className="w-5 h-5 text-[#B5615A] flex-shrink-0" />
+          <div>
+            <div className="font-medium text-sm text-[#F2F0EA]">
+              Evaluation Metrics Unavailable
+            </div>
+            <div className="text-xs text-[#B4B9D2]">
+              {error || "Unable to connect to Revora API. No mock metrics displayed."}
+            </div>
+          </div>
+        </div>
+        <button
+          onClick={onRetry}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium bg-[#B5615A]/20 hover:bg-[#B5615A]/30 border border-[#B5615A]/40 text-[#F2F0EA] transition-colors"
+        >
+          <RefreshCw className="w-3.5 h-3.5" />
+          <span>Retry Connection</span>
+        </button>
+      </div>
+    );
+  }
+
+  const primary = data.primary_benchmark_seed_42;
+  const revora = primary.revora;
+  const baseline = primary.baseline;
+  const delta = primary.comparative_delta;
+  const metadata = data.metadata;
+
+  return (
+    <section aria-label="Executive Metrics" className="space-y-2">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2 text-xs text-[#B4B9D2] font-mono">
+          <span className="w-2 h-2 rounded-full bg-[#7BA88C]" />
+          <span>LIVE EVALUATION AGGREGATES · CHRONOLOGICALLY HELD-OUT TEST COHORT</span>
+        </div>
+        <span className="text-[11px] font-mono text-[#7E85A6]">
+          Baseline: {data.baseline_description}
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+        {/* Metric 1: Recovery Rate */}
+        <div className="p-3.5 rounded-lg bg-[#1B2140] border border-[#2A3362] hover:border-[#3D4A88] transition-all">
+          <div className="flex items-center justify-between text-xs text-[#B4B9D2] mb-1">
+            <span>Recovery Rate</span>
+            <div className="inline-flex items-center gap-0.5 text-[11px] font-mono font-semibold text-[#7BA88C] bg-[#7BA88C]/10 px-1.5 py-0.5 rounded border border-[#7BA88C]/30">
+              <ArrowUpRight className="w-3 h-3" />
+              <span>+{delta.absolute_revenue_recovery_rate_delta_pct.toFixed(1)}%</span>
+            </div>
+          </div>
+          <div className="text-2xl font-bold font-mono text-[#F2F0EA] tabular-nums">
+            {formatPct(revora.revenue_recovery_rate_pct)}
+          </div>
+          <div className="text-[11px] text-[#7E85A6] mt-1">
+            vs {formatPct(baseline.revenue_recovery_rate_pct)} control baseline
+          </div>
+        </div>
+
+        {/* Metric 2: Recovered Revenue */}
+        <div className="p-3.5 rounded-lg bg-[#1B2140] border border-[#2A3362] hover:border-[#3D4A88] transition-all">
+          <div className="flex items-center justify-between text-xs text-[#B4B9D2] mb-1">
+            <span>Recovered Value</span>
+            <div className="inline-flex items-center gap-0.5 text-[11px] font-mono font-semibold text-[#7BA88C] bg-[#7BA88C]/10 px-1.5 py-0.5 rounded border border-[#7BA88C]/30">
+              <ArrowUpRight className="w-3 h-3" />
+              <span>+{formatINR(delta.absolute_recovered_amount_delta_inr)}</span>
+            </div>
+          </div>
+          <div className="text-2xl font-bold font-mono text-[#F2F0EA] tabular-nums">
+            {formatINR(revora.total_recovered_amount_inr)}
+          </div>
+          <div className="text-[11px] text-[#7E85A6] mt-1">
+            of {formatINR(revora.total_revenue_at_risk_inr)} at-risk volume
+          </div>
+        </div>
+
+        {/* Metric 3: Futile Retries Prevented */}
+        <div className="p-3.5 rounded-lg bg-[#1B2140] border border-[#2A3362] hover:border-[#3D4A88] transition-all">
+          <div className="flex items-center justify-between text-xs text-[#B4B9D2] mb-1">
+            <span>Futile Retries Saved</span>
+            <div className="inline-flex items-center gap-0.5 text-[11px] font-mono font-semibold text-[#E8A33D] bg-[#E8A33D]/10 px-1.5 py-0.5 rounded border border-[#E8A33D]/30">
+              <ArrowDownRight className="w-3 h-3" />
+              <span>-{delta.intervention_reduction_pct.toFixed(1)}% actions</span>
+            </div>
+          </div>
+          <div className="text-2xl font-bold font-mono text-[#E8A33D] tabular-nums">
+            {delta.futile_retries_prevented}
+          </div>
+          <div className="text-[11px] text-[#7E85A6] mt-1">
+            Permanent failures stopped immediately
+          </div>
+        </div>
+
+        {/* Metric 4: Stopping Rule Compliance */}
+        <div className="p-3.5 rounded-lg bg-[#1B2140] border border-[#2A3362] hover:border-[#3D4A88] transition-all">
+          <div className="flex items-center justify-between text-xs text-[#B4B9D2] mb-1">
+            <span>Stopping Compliance</span>
+            <div className="inline-flex items-center gap-0.5 text-[11px] font-mono font-semibold text-[#7BA88C] bg-[#7BA88C]/10 px-1.5 py-0.5 rounded border border-[#7BA88C]/30">
+              <ShieldCheck className="w-3 h-3" />
+              <span>100% Verified</span>
+            </div>
+          </div>
+          <div className="text-2xl font-bold font-mono text-[#F2F0EA] tabular-nums">
+            {formatPct(revora.stopping_rule_compliance_pct)}
+          </div>
+          <div className="text-[11px] text-[#7E85A6] mt-1">
+            Zero policy breaches (Max 3 retries, 24h cooldown)
+          </div>
+        </div>
+
+        {/* Metric 5: Cohort Volume */}
+        <div className="p-3.5 rounded-lg bg-[#1B2140] border border-[#2A3362] hover:border-[#3D4A88] transition-all">
+          <div className="flex items-center justify-between text-xs text-[#B4B9D2] mb-1">
+            <span>Evaluated Cohort</span>
+            <div className="inline-flex items-center gap-0.5 text-[11px] font-mono text-[#B4B9D2] bg-[#222950] px-1.5 py-0.5 rounded border border-[#2A3362]">
+              <span>Seed {metadata.primary_seed}</span>
+            </div>
+          </div>
+          <div className="text-2xl font-bold font-mono text-[#F2F0EA] tabular-nums">
+            {metadata.cohort_size} <span className="text-sm font-normal text-[#7E85A6]">payments</span>
+          </div>
+          <div className="text-[11px] text-[#7E85A6] mt-1">
+            {primary.revora.recovered_payments} recovered · {primary.revora.unresolved_payments} terminal
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};

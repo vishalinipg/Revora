@@ -1,0 +1,229 @@
+{
+  "metadata": {
+    "generated_at": "2026-09-05T12:50:29.137060Z",
+    "cohort_split": "held_out_test",
+    "cohort_size": 180,
+    "total_revenue_at_risk_inr": 1094978.07,
+    "primary_seed": 42,
+    "seeds_evaluated": [
+      42,
+      100,
+      555,
+      2026,
+      9999
+    ],
+    "policy_version": "revora_policy_v1",
+    "model_version": "revora_propensity_logreg_v1",
+    "production_rail_target": "UPI AutoPay (NPCI e-Mandate)",
+    "test_mode_adapter": "Razorpay Card Subscriptions",
+    "policy_threshold_assumption": "₹15,000 [PROJECT_POLICY_ASSUMPTION / VERIFY_RBI_CIRCULAR]"
+  },
+  "primary_benchmark_seed_42": {
+    "revora": {
+      "policy_name": "revora",
+      "random_seed": 42,
+      "total_payments_evaluated": 180,
+      "total_revenue_at_risk_inr": 1094978.07,
+      "recovered_payments": 152,
+      "unresolved_payments": 28,
+      "payment_recovery_rate_pct": 84.44,
+      "total_recovered_amount_inr": 932677.51,
+      "revenue_recovery_rate_pct": 85.18,
+      "total_interventions_attempted": 254,
+      "interventions_per_recovered_payment": 1.67,
+      "recovery_efficiency_inr_per_intervention": 3671.96,
+      "stopping_rule_compliance_pct": 100.0,
+      "actions_breakdown": {
+        "retry": 103,
+        "payment_update_request": 116,
+        "human_escalation": 19,
+        "stop": 16
+      }
+    },
+    "baseline": {
+      "policy_name": "baseline",
+      "random_seed": 42,
+      "total_payments_evaluated": 180,
+      "total_revenue_at_risk_inr": 1094978.07,
+      "recovered_payments": 119,
+      "unresolved_payments": 61,
+      "payment_recovery_rate_pct": 66.11,
+      "total_recovered_amount_inr": 717968.99,
+      "revenue_recovery_rate_pct": 65.57,
+      "total_interventions_attempted": 325,
+      "interventions_per_recovered_payment": 2.73,
+      "recovery_efficiency_inr_per_intervention": 2209.14,
+      "stopping_rule_compliance_pct": 100.0,
+      "actions_breakdown": {
+        "retry": 325
+      }
+    },
+    "comparative_delta": {
+      "random_seed": 42,
+      "absolute_revenue_recovery_rate_delta_pct": 19.61,
+      "relative_revenue_recovery_rate_improvement_pct": 29.91,
+      "absolute_recovered_amount_delta_inr": 214708.52,
+      "intervention_delta_count": -71,
+      "intervention_reduction_pct": 21.85,
+      "recovery_efficiency_delta_inr": 1462.82,
+      "futile_retries_prevented": 113
+    },
+    "decision_quality_revora": {
+      "total_decisions_evaluated": 180,
+      "oracle_concordant_decisions": 154,
+      "oracle_concordance_rate_pct": 85.56,
+      "unnecessary_retry_count": 0,
+      "unnecessary_retry_rate_pct": 0.0,
+      "missed_recovery_opportunity_count": 0,
+      "missed_recovery_opportunity_rate_pct": 0.0,
+      "inappropriate_customer_friction_count": 0,
+      "inappropriate_customer_friction_rate_pct": 0.0,
+      "inappropriate_escalation_count": 6,
+      "inappropriate_escalation_rate_pct": 3.33,
+      "optimal_action_count": 154
+    },
+    "decision_quality_baseline": {
+      "total_decisions_evaluated": 180,
+      "oracle_concordant_decisions": 89,
+      "oracle_concordance_rate_pct": 49.44,
+      "unnecessary_retry_count": 39,
+      "unnecessary_retry_rate_pct": 21.67,
+      "missed_recovery_opportunity_count": 0,
+      "missed_recovery_opportunity_rate_pct": 0.0,
+      "inappropriate_customer_friction_count": 0,
+      "inappropriate_customer_friction_rate_pct": 0.0,
+      "inappropriate_escalation_count": 0,
+      "inappropriate_escalation_rate_pct": 0.0,
+      "optimal_action_count": 89
+    }
+  },
+  "language_breakdown": [
+    {
+      "language_code": "en",
+      "display_name": "English (en)",
+      "customer_count": 57,
+      "payments_count": 81,
+      "revenue_at_risk_inr": 480330.08,
+      "recovered_payments": 70,
+      "recovered_amount_inr": 432135.61,
+      "recovery_rate_pct": 89.97,
+      "messages_dispatched": 95,
+      "fallback_from_unknown": false
+    },
+    {
+      "language_code": "ta_tanglish",
+      "display_name": "Tamil / Tanglish (ta_tanglish)",
+      "customer_count": 42,
+      "payments_count": 56,
+      "revenue_at_risk_inr": 377454.77,
+      "recovered_payments": 46,
+      "recovered_amount_inr": 288374.85,
+      "recovery_rate_pct": 76.4,
+      "messages_dispatched": 67,
+      "fallback_from_unknown": false
+    },
+    {
+      "language_code": "hi_hinglish",
+      "display_name": "Hindi / Hinglish (hi_hinglish)",
+      "customer_count": 27,
+      "payments_count": 38,
+      "revenue_at_risk_inr": 211940.91,
+      "recovered_payments": 31,
+      "recovered_amount_inr": 186914.74,
+      "recovery_rate_pct": 88.19,
+      "messages_dispatched": 52,
+      "fallback_from_unknown": false
+    },
+    {
+      "language_code": "unknown_fallback_to_en",
+      "display_name": "Unknown -> Fallback English",
+      "customer_count": 3,
+      "payments_count": 5,
+      "revenue_at_risk_inr": 25252.31,
+      "recovered_payments": 5,
+      "recovered_amount_inr": 25252.31,
+      "recovery_rate_pct": 100.0,
+      "messages_dispatched": 5,
+      "fallback_from_unknown": true
+    }
+  ],
+  "multi_seed_robustness_benchmark": {
+    "seeds_evaluated": [
+      42,
+      100,
+      555,
+      2026,
+      9999
+    ],
+    "held_out_cohort_size": 180,
+    "total_revenue_at_risk_inr": 1094978.07,
+    "revora_revenue_recovery_rate": {
+      "mean": 84.1,
+      "std": 1.85,
+      "min": 81.07,
+      "max": 85.52
+    },
+    "baseline_revenue_recovery_rate": {
+      "mean": 66.3,
+      "std": 2.94,
+      "min": 62.83,
+      "max": 70.03
+    },
+    "revora_recovered_amount_inr": {
+      "mean": 920877.76,
+      "std": 20287.46,
+      "min": 887701.07,
+      "max": 936399.2
+    },
+    "baseline_recovered_amount_inr": {
+      "mean": 725970.02,
+      "std": 32252.21,
+      "min": 687946.11,
+      "max": 766828.77
+    },
+    "recovered_amount_delta_inr": {
+      "mean": 194907.74,
+      "std": 30093.42,
+      "min": 148364.58,
+      "max": 225866.89
+    },
+    "revora_interventions": {
+      "mean": 262.6,
+      "std": 6.66,
+      "min": 254,
+      "max": 269
+    },
+    "baseline_interventions": {
+      "mean": 325.2,
+      "std": 11.65,
+      "min": 307,
+      "max": 338
+    },
+    "intervention_reduction_pct": {
+      "mean": 19.19,
+      "std": 2.9,
+      "min": 14.33,
+      "max": 21.85
+    },
+    "revora_oracle_concordance_rate": {
+      "mean": 85.56,
+      "std": 0.0,
+      "min": 85.56,
+      "max": 85.56
+    },
+    "baseline_oracle_concordance_rate": {
+      "mean": 49.44,
+      "std": 0.0,
+      "min": 49.44,
+      "max": 49.44
+    }
+  },
+  "metric_definitions": {
+    "revenue_recovery_rate_pct": "Percentage of total at-risk INR successfully recovered.",
+    "payment_recovery_rate_pct": "Percentage of failed recurring payment events successfully resolved.",
+    "recovery_efficiency_inr_per_intervention": "Average recovered INR per intervention attempted.",
+    "oracle_concordance_rate_pct": "Percentage of first actions matching the hidden causal oracle optimal action.",
+    "futile_retries_prevented": "Number of retries avoided on non-recoverable permanent failure causes.",
+    "stopping_rule_compliance_pct": "Adherence to maximum retry caps, cooldown windows, and zero actions after recovery."
+  }
+}

@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Locked Revora Color Identity */
+    --bg-base: #12172B;
+    --bg-surface: #1B2140;
+    --bg-surface-raised: #222950;
+    --bg-surface-elevated: #28315E;
+    --border-subtle: #2A3362;
+    --border-highlight: #3D4A88;
+    
+    --accent-marigold: #E8A33D;
+    --accent-sage: #7BA88C;
+    --accent-muted-red: #B5615A;
+    --text-primary: #F2F0EA;
+    --text-secondary: #B4B9D2;
+    --text-muted: #7E85A6;
+
+    --font-serif: "Newsreader", Georgia, serif;
+    --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  body {
+    background-color: #12172B;
+    color: #F2F0EA;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+}
+
+/* Typography Utility Classes */
+.font-display {
+  font-family: var(--font-serif);
+}
+
+.font-grotesk {
+  font-family: var(--font-sans);
+}
+
+/* Custom crisp dark scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #12172B;
+}
+::-webkit-scrollbar-thumb {
+  background: #2A3362;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3D4A88;
+}
+
+/* Tabular numerals for financial figures */
+.font-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Subtle fintech pulse */
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-subtle-pulse {
+  animation: subtle-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

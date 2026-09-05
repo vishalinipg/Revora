@@ -1,0 +1,71 @@
+{
+  "metadata": {
+    "generator": "Revora Synthetic Data Generator v1.0",
+    "generation_timestamp": "2026-09-05T11:20:56.504198",
+    "random_seed": 42,
+    "temporal_window_start": "2026-01-01T17:42:00",
+    "temporal_window_end": "2026-04-02T05:51:00",
+    "explicitly_synthetic": true
+  },
+  "volume": {
+    "total_customers": 300,
+    "total_mandates": 300,
+    "total_failed_payments": 1200,
+    "total_revenue_at_risk_inr": 6753279.55,
+    "average_payment_amount_inr": 5627.73,
+    "min_payment_amount_inr": 474.68,
+    "max_payment_amount_inr": 14925.5
+  },
+  "distributions": {
+    "payment_rails": {
+      "upi_autopay": 892,
+      "card": 308
+    },
+    "failure_codes": {
+      "blocked_account": 74,
+      "insufficient_funds": 485,
+      "authentication_required": 180,
+      "bank_timeout": 264,
+      "unknown": 46,
+      "expired_mandate": 151
+    },
+    "customer_preferred_languages": {
+      "hi_hinglish": 61,
+      "en": 133,
+      "ta_tanglish": 96,
+      "unknown": 10
+    },
+    "mandate_statuses": {
+      "active": 244,
+      "expired": 21,
+      "revoked": 17,
+      "pending": 18
+    },
+    "evaluation_splits": {
+      "train": 840,
+      "validation": 180,
+      "test": 180
+    }
+  },
+  "ground_truth_evaluation_only": {
+    "mean_recoverability": 0.6211,
+    "std_recoverability": 0.3036,
+    "min_recoverability": 0.05,
+    "max_recoverability": 0.95,
+    "median_recoverability": 0.7344,
+    "true_failure_causes": {
+      "temporary_bank_outage": 264,
+      "mandate_token_expired": 151,
+      "permanent_account_closure": 74,
+      "temporary_salary_delay": 434,
+      "voluntary_churn_intent": 97,
+      "auth_otp_missed": 180
+    },
+    "latent_optimal_actions": {
+      "human_escalation": 6,
+      "retry": 571,
+      "payment_update_request": 564,
+      "stop": 59
+    }
+  }
+}
