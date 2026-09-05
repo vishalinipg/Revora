@@ -13,6 +13,7 @@ venv/
 *.db
 *.sqlite
 *.sqlite3
+!data/revora.db
 
 # Node / Next.js
 node_modules/

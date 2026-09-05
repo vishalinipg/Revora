@@ -22,6 +22,23 @@ async def lifespan(app: FastAPI):
     """Application lifespan context for startup initialization."""
     # Ensure all tables exist
     init_db()
+
+    # Self-healing database seeder: populate records if running on a fresh/empty deployment
+    try:
+        from backend.app.database import SessionLocal
+        from backend.app.models import Payment
+        db = SessionLocal()
+        try:
+            if db.query(Payment).count() == 0:
+                print("[REVORA STARTUP] Database empty. Auto-seeding 1,200 synthetic recurring payment records...")
+                from scripts.generate_data import generate_synthetic_dataset
+                generate_synthetic_dataset(num_payments=1200, seed=42, db_session=db)
+                print("[REVORA STARTUP] Database auto-seeded successfully.")
+        finally:
+            db.close()
+    except Exception as exc:
+        print(f"[REVORA STARTUP WARNING] Database auto-seed check skipped or failed: {exc}")
+
     yield
 
 
