@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Activity, ShieldAlert, BarChart3, RefreshCw, Server } from "lucide-react";
+import { Activity, ShieldAlert, BarChart3, RefreshCw, Server, Sparkles } from "lucide-react";
 import { api } from "../lib/api";
 import { HealthResponse } from "../lib/types";
+import { useTour } from "./tour/TourContext";
 
 interface HeaderProps {
   onOpenBenchmark: () => void;
@@ -16,6 +17,7 @@ export const Header: React.FC<HeaderProps> = ({
   onRefreshAll,
   isRefreshing = false,
 }) => {
+  const { startTour } = useTour();
   const [health, setHealth] = useState<HealthResponse | null>(null);
   const [isHealthy, setIsHealthy] = useState<boolean | null>(null);
 
@@ -114,6 +116,16 @@ export const Header: React.FC<HeaderProps> = ({
                 : "CHECKING..."}
             </span>
           </div>
+
+          {/* Product Tour Trigger */}
+          <button
+            data-testid="console-product-tour-btn"
+            onClick={() => startTour(0)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#E8A33D]/10 hover:bg-[#E8A33D]/20 text-[#E8A33D] border border-[#E8A33D]/40 transition-colors shadow-sm min-h-[38px] cursor-pointer"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-[#E8A33D]" />
+            <span>Product tour</span>
+          </button>
 
           {/* Benchmark Modal Trigger */}
           <button

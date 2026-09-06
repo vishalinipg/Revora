@@ -79,7 +79,10 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
   return (
     <div className="flex flex-col h-full bg-[#1B2140] border border-[#2A3362] rounded-xl overflow-hidden shadow-sm">
       {/* Top Inspector Header */}
-      <div className="p-4 sm:p-5 border-b border-[#2A3362] bg-[#171D36] flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+      <div
+        data-testid="decision-inspector-header"
+        className="p-4 sm:p-5 border-b border-[#2A3362] bg-[#171D36] flex flex-wrap items-center justify-between gap-3 sm:gap-4"
+      >
         <div className="space-y-1.5 max-w-full">
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <span className="text-xs font-mono text-[#7E85A6]">INSPECTING PAYMENT</span>
@@ -106,7 +109,10 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
       {/* Main Inspection Body */}
       <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 sm:space-y-5">
         {/* Row 1: Decision Banner & Execution Controls */}
-        <div className="p-4 sm:p-5 rounded-xl bg-[#222950] border border-[#2A3362] relative overflow-hidden shadow-sm space-y-4">
+        <div
+          data-testid="decision-engine-card"
+          className="p-4 sm:p-5 rounded-xl bg-[#222950] border border-[#2A3362] relative overflow-hidden shadow-sm space-y-4"
+        >
           {/* Top Row: Engine Identity & Operator Action Buttons */}
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3.5 pb-3.5 border-b border-[#2A3362]/70">
             <div className="flex items-center gap-3">
@@ -185,7 +191,10 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
         {/* Row 2: Diagnostics & Signals Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Card A: Observed Provider Signals (Tier 1) */}
-          <div className="p-4.5 rounded-xl bg-[#171D36] border border-[#2A3362] space-y-3.5 shadow-sm">
+          <div
+            data-testid="observed-signals-card"
+            className="p-4.5 rounded-xl bg-[#171D36] border border-[#2A3362] space-y-3.5 shadow-sm"
+          >
             <div className="flex items-center justify-between border-b border-[#2A3362] pb-2.5">
               <div className="text-xs font-mono font-semibold text-[#B4B9D2] uppercase flex items-center gap-2">
                 <Activity className="w-3.5 h-3.5 text-[#E8A33D]" />
@@ -242,7 +251,10 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
           </div>
 
           {/* Card B: Deterministic Failure Diagnosis */}
-          <div className="p-4.5 rounded-xl bg-[#171D36] border border-[#2A3362] space-y-3.5 shadow-sm">
+          <div
+            data-testid="failure-diagnosis-card"
+            className="p-4.5 rounded-xl bg-[#171D36] border border-[#2A3362] space-y-3.5 shadow-sm"
+          >
             <div className="flex items-center justify-between border-b border-[#2A3362] pb-2.5">
               <div className="text-xs font-mono font-semibold text-[#B4B9D2] uppercase flex items-center gap-2">
                 <FileCheck className="w-3.5 h-3.5 text-[#E8A33D]" />
@@ -295,7 +307,10 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
         </div>
 
         {/* Row 3: Interpretable ML Propensity Signal */}
-        <div className="p-5 rounded-xl bg-[#171D36] border border-[#2A3362] space-y-3.5 shadow-sm">
+        <div
+          data-testid="ml-propensity-card"
+          className="p-5 rounded-xl bg-[#171D36] border border-[#2A3362] space-y-3.5 shadow-sm"
+        >
           <div className="flex items-center justify-between border-b border-[#2A3362] pb-2.5">
             <div className="text-xs font-mono font-semibold text-[#B4B9D2] uppercase flex items-center gap-2">
               <Zap className="w-3.5 h-3.5 text-[#E8A33D]" />

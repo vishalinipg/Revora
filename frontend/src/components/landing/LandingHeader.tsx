@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import { ArrowRight, ShieldAlert, Menu, X } from "lucide-react";
+import { ArrowRight, ShieldAlert, Menu, X, Sparkles } from "lucide-react";
 import { api } from "../../lib/api";
 import { HealthResponse } from "../../lib/types";
+import { useTour } from "../tour/TourContext";
 
 export const LandingHeader: React.FC = () => {
+  const { startTour } = useTour();
   const [health, setHealth] = useState<HealthResponse | null>(null);
   const [isHealthy, setIsHealthy] = useState<boolean | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -103,6 +105,16 @@ export const LandingHeader: React.FC = () => {
             </span>
           </div>
 
+          {/* Product tour CTA */}
+          <button
+            onClick={() => startTour(0)}
+            data-testid="product-tour-btn"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#E8A33D]/40 bg-[#E8A33D]/10 hover:bg-[#E8A33D]/20 text-[#E8A33D] font-mono text-xs font-semibold transition-all shadow-sm min-h-[38px] cursor-pointer"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-[#E8A33D]" />
+            <span>Product tour</span>
+          </button>
+
           {/* Operator Console CTA */}
           <a
             href="/console"
@@ -144,6 +156,19 @@ export const LandingHeader: React.FC = () => {
           data-testid="mobile-menu-drawer"
           className="md:hidden mt-3 pt-3 pb-4 border-t border-[#2A3362] flex flex-col gap-3 animate-in slide-in-from-top-2 duration-150"
         >
+          {/* Mobile Tour Button */}
+          <button
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              startTour(0);
+            }}
+            data-testid="mobile-product-tour-btn"
+            className="min-h-[44px] flex items-center gap-2 px-3 py-2 rounded-md bg-[#E8A33D]/10 border border-[#E8A33D]/30 text-[#E8A33D] font-mono text-xs font-semibold hover:bg-[#E8A33D]/20 transition-colors w-full text-left cursor-pointer"
+          >
+            <Sparkles className="w-4 h-4 text-[#E8A33D]" />
+            <span>Product tour</span>
+          </button>
+
           {/* Anchor Links */}
           <nav className="flex flex-col gap-1 text-sm font-mono text-[#F2F0EA]">
             <a

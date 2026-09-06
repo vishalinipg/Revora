@@ -21,8 +21,10 @@ import {
   PaymentTimelineResponse,
 } from "../../../../lib/types";
 import { api } from "../../../../lib/api";
+import { useTour } from "../../../../components/tour/TourContext";
 
 export default function InspectPaymentPage() {
+  const { activeModal, setActiveModal, isActive } = useTour();
   const params = useParams();
   const router = useRouter();
   const rawId = params?.id;
@@ -45,6 +47,23 @@ export default function InspectPaymentPage() {
 
   // Outbox Preview Modal
   const [isOutboxOpen, setIsOutboxOpen] = useState(false);
+
+  // Sync modal display from tour
+  useEffect(() => {
+    if (activeModal === "timeline" && paymentId) {
+      setIsTimelineOpen(true);
+      setIsLoadingTimeline(true);
+      api.getPaymentTimeline(paymentId)
+        .then((t) => setTimelineData(t))
+        .catch((err) => setTimelineError(err.message))
+        .finally(() => setIsLoadingTimeline(false));
+    } else if (activeModal === "outbox") {
+      setIsOutboxOpen(true);
+    } else if (isActive) {
+      setIsTimelineOpen(false);
+      setIsOutboxOpen(false);
+    }
+  }, [activeModal, paymentId, isActive]);
 
   // 1. Fetch Selected Payment Detail
   const fetchPaymentDetail = useCallback(async (id: string) => {
@@ -166,7 +185,10 @@ export default function InspectPaymentPage() {
           timeline={timelineData}
           isLoading={isLoadingTimeline}
           error={timelineError}
-          onClose={() => setIsTimelineOpen(false)}
+          onClose={() => {
+            setIsTimelineOpen(false);
+            setActiveModal(null);
+          }}
           paymentId={paymentId}
         />
       )}
@@ -175,7 +197,10 @@ export default function InspectPaymentPage() {
       {isOutboxOpen && paymentId && (
         <MockOutboxModal
           paymentId={paymentId}
-          onClose={() => setIsOutboxOpen(false)}
+          onClose={() => {
+            setIsOutboxOpen(false);
+            setActiveModal(null);
+          }}
         />
       )}
     </div>

@@ -10,8 +10,11 @@ import {
   EvaluationSummaryResponse,
 } from "../../lib/types";
 import { api } from "../../lib/api";
+import { useTour } from "../../components/tour/TourContext";
 
 export default function OperatorConsolePage() {
+  const { activeModal, setActiveModal, setSelectedPaymentId: setTourSelectedPaymentId, isActive } = useTour();
+
   // Global / Executive Metrics State
   const [metricsData, setMetricsData] = useState<EvaluationSummaryResponse | null>(null);
   const [isLoadingMetrics, setIsLoadingMetrics] = useState(true);
@@ -81,8 +84,25 @@ export default function OperatorConsolePage() {
     fetchPayments();
   }, [fetchMetrics, fetchPayments]);
 
+  // Sync first real payment ID into tour context
+  useEffect(() => {
+    if (paymentsData?.items?.length) {
+      setTourSelectedPaymentId(paymentsData.items[0].payment_id);
+    }
+  }, [paymentsData, setTourSelectedPaymentId]);
+
+  // Sync benchmark modal from tour
+  useEffect(() => {
+    if (activeModal === "benchmark") {
+      setIsBenchmarkOpen(true);
+    } else if (isActive) {
+      setIsBenchmarkOpen(false);
+    }
+  }, [activeModal, isActive]);
+
   const handleSelectPayment = (id: string) => {
     setSelectedPaymentId(id);
+    setTourSelectedPaymentId(id);
   };
 
   const handleFilterChange = (newFilters: { status: string; rail: string; failureCode: string }) => {
@@ -137,7 +157,12 @@ export default function OperatorConsolePage() {
 
       {/* Multi-Seed Evaluation & Benchmark Modal */}
       {isBenchmarkOpen && (
-        <BenchmarkModal onClose={() => setIsBenchmarkOpen(false)} />
+        <BenchmarkModal
+          onClose={() => {
+            setIsBenchmarkOpen(false);
+            setActiveModal(null);
+          }}
+        />
       )}
     </div>
   );

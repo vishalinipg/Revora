@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { TourProvider } from "../components/tour/TourContext";
 
 export const metadata: Metadata = {
   title: "Revora · Operator Console — Adaptive Revenue Recovery",
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark h-full antialiased">
       <body className="min-h-full flex flex-col bg-[#12172B] text-[#F2F0EA] font-grotesk">
-        {children}
+        <TourProvider>
+          {children}
+        </TourProvider>
       </body>
     </html>
   );
