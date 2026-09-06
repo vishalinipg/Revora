@@ -77,7 +77,10 @@ export const PaymentQueue: React.FC<PaymentQueueProps> = ({
         </div>
 
         {/* Filter Toolbar: Full-width responsive layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
+        <div
+          data-testid="payment-queue-filters"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3"
+        >
           {/* Instant Search */}
           <div className="relative">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#7E85A6]" />

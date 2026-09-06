@@ -1,3 +1,14 @@
+export type TourPlacement =
+  | "top"
+  | "bottom"
+  | "left"
+  | "right"
+  | "bottom-right"
+  | "bottom-left"
+  | "top-right"
+  | "top-left"
+  | "auto";
+
 export interface TourStep {
   id: string;
   route: string;
@@ -9,7 +20,7 @@ export interface TourStep {
     text: string;
     className: string;
   };
-  placement?: "top" | "bottom" | "left" | "right" | "auto";
+  placement?: TourPlacement;
   nextButtonLabel?: string;
   actionBefore?: "scrollTo" | "openModal";
   modalToOpen?: "timeline" | "outbox" | "benchmark";
@@ -53,7 +64,7 @@ export const TOUR_STEPS: TourStep[] = [
       text: "[DECISION]",
       className: "bg-[#E8A33D]/15 text-[#E8A33D] border-[#E8A33D]/40",
     },
-    placement: "top",
+    placement: "bottom-right",
     actionBefore: "scrollTo",
   },
   {
@@ -67,7 +78,7 @@ export const TOUR_STEPS: TourStep[] = [
       text: "[DECISION]",
       className: "bg-[#E8A33D]/15 text-[#E8A33D] border-[#E8A33D]/40",
     },
-    placement: "top",
+    placement: "bottom-right",
     actionBefore: "scrollTo",
   },
   {
@@ -81,7 +92,7 @@ export const TOUR_STEPS: TourStep[] = [
       text: "[SIMULATION ONLY]",
       className: "bg-[#64B5F6]/15 text-[#64B5F6] border-[#64B5F6]/40",
     },
-    placement: "top",
+    placement: "bottom-right",
     actionBefore: "scrollTo",
   },
   {
@@ -119,6 +130,19 @@ export const TOUR_STEPS: TourStep[] = [
     title: "Live Aggregate Metrics",
     explanation:
       "Executive aggregates computed directly from live evaluation data: Recovery Rate, Recovered Rupee Value, Futile Retries Saved, and 100% Verified Policy Compliance.",
+    badge: {
+      text: "[OBSERVED]",
+      className: "bg-[#B5615A]/15 text-[#B5615A] border-[#B5615A]/40",
+    },
+    placement: "bottom",
+  },
+  {
+    id: "console-queue-filters",
+    route: "/console",
+    targetSelector: '[data-testid="payment-queue-filters"]',
+    title: "Payment Queue Filtering",
+    explanation:
+      "Filter recurring payments by live lifecycle status (Failed, Pending Retry, Recovered, Halted), rail (UPI AutoPay vs Card), failure code, or instant search across customer IDs.",
     badge: {
       text: "[OBSERVED]",
       className: "bg-[#B5615A]/15 text-[#B5615A] border-[#B5615A]/40",
@@ -168,6 +192,19 @@ export const TOUR_STEPS: TourStep[] = [
     placement: "bottom",
   },
   {
+    id: "inspect-observed-signals",
+    route: "/console/inspect",
+    targetSelector: '[data-testid="observed-signals-card"]',
+    title: "Observed Provider Signals",
+    explanation:
+      "Tier 1 operational telemetry captured directly from bank & gateway webhooks: Amount Due, Failure Code, Payment Rail, Mandate Status, Native Retries, and Historical Success Rate.",
+    badge: {
+      text: "[OBSERVED]",
+      className: "bg-[#B5615A]/15 text-[#B5615A] border-[#B5615A]/40",
+    },
+    placement: "bottom",
+  },
+  {
     id: "inspect-decision-engine",
     route: "/console/inspect",
     targetSelector: '[data-testid="decision-engine-card"]',
@@ -191,7 +228,7 @@ export const TOUR_STEPS: TourStep[] = [
       text: "[DECISION]",
       className: "bg-[#E8A33D]/15 text-[#E8A33D] border-[#E8A33D]/40",
     },
-    placement: "top",
+    placement: "bottom",
   },
   {
     id: "inspect-ml-propensity",
@@ -204,7 +241,7 @@ export const TOUR_STEPS: TourStep[] = [
       text: "[SIGNAL ONLY]",
       className: "bg-[#7BA88C]/15 text-[#7BA88C] border-[#7BA88C]/40",
     },
-    placement: "top",
+    placement: "bottom",
   },
   {
     id: "inspect-rerun-btn",

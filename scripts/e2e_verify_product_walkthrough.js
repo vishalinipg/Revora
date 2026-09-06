@@ -154,7 +154,14 @@ async function runWalkthroughVerification() {
     const metricsStepTitle = await page.$eval("#tour-popover-title", (el) => el.innerText);
     console.log(`✓ Console Step: "${metricsStepTitle}"`);
 
-    // Console Metrics -> Console Queue
+    // Console Metrics -> Console Queue Filters
+    await page.click('[data-testid="tour-next-btn"]');
+    await sleep(600);
+    const filterStepTitle = await page.$eval("#tour-popover-title", (el) => el.innerText);
+    console.log(`✓ Console Step: "${filterStepTitle}"`);
+    testResults["Payment Queue Filtering step"] = filterStepTitle.includes("Filtering") ? "PASS" : "FAIL";
+
+    // Console Queue Filters -> Console Queue
     await page.click('[data-testid="tour-next-btn"]');
     await sleep(600);
     const queueStepTitle = await page.$eval("#tour-popover-title", (el) => el.innerText);
@@ -202,6 +209,13 @@ async function runWalkthroughVerification() {
     console.log(`✓ Anchored to: "${inspectStep1}"`);
     await saveScreenshot(page, "walkthrough_inspect_context.png");
 
+    // Observed Provider Signals Step
+    await page.click('[data-testid="tour-next-btn"]');
+    await sleep(600);
+    const observedSignalsStepTitle = await page.$eval("#tour-popover-title", (el) => el.innerText);
+    console.log(`✓ Anchored to: "${observedSignalsStepTitle}"`);
+    testResults["Observed Provider Signals step"] = observedSignalsStepTitle.includes("Observed Provider Signals") ? "PASS" : "FAIL";
+
     // Decision Engine Step
     await page.click('[data-testid="tour-next-btn"]');
     await sleep(600);
@@ -231,7 +245,7 @@ async function runWalkthroughVerification() {
     // -------------------------------------------------------------
     console.log("\n--- TEST 6: Real Modal Integrations (Timeline & Outbox) ---");
     
-    // Step 16: Customer Audit Timeline Button (modal is CLOSED, button is spotlighted)
+    // Customer Audit Timeline Button (modal is CLOSED, button is spotlighted)
     await page.click('[data-testid="tour-next-btn"]');
     await sleep(600);
     const timelineBtnTitle = await page.$eval("#tour-popover-title", (el) => el.innerText);
@@ -299,9 +313,9 @@ async function runWalkthroughVerification() {
     // -------------------------------------------------------------
     console.log("\n--- TEST 8: Walkthrough Completion & Persistence ---");
     
-    // Step 22: Advance to Final Completion Step (BenchmarkModal cleanly CLOSED!)
+    // Advance to Final Completion Step (BenchmarkModal cleanly CLOSED!)
     await page.click('[data-testid="tour-next-btn"]');
-    await sleep(600);
+    await page.waitForSelector('[data-testid="tour-finish-btn"]', { timeout: 10000 });
     const finishStepTitle = await page.$eval("#tour-popover-title", (el) => el.innerText);
     console.log(`✓ Final step: "${finishStepTitle}"`);
     const benchmarkOpenOnComplete = await page.$('[data-testid="benchmark-modal"]');
