@@ -55,6 +55,8 @@ async function runWalkthroughVerification() {
 
   try {
     const page = await browser.newPage();
+    page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+    page.on('pageerror', err => console.log('PAGE ERROR:', err.message));
 
     // -------------------------------------------------------------
     // 1. FIRST-TIME EXPERIENCE & INITIAL STEP
@@ -72,7 +74,8 @@ async function runWalkthroughVerification() {
     await page.waitForSelector('[data-testid="hero-particle-container"]', { timeout: 10000 });
     console.log("✓ First target ([data-testid='hero-particle-container']) rendered successfully.");
 
-    // Click "Product tour" entry point
+    // Wait for hydration and click "Product tour" entry point
+    await sleep(1000);
     await page.click('[data-testid="product-tour-btn"]');
 
     // Wait for Product Tour Popover and Spotlight to appear
@@ -228,28 +231,39 @@ async function runWalkthroughVerification() {
     // -------------------------------------------------------------
     console.log("\n--- TEST 6: Real Modal Integrations (Timeline & Outbox) ---");
     
-    // Step: Customer Audit Timeline (opens timeline modal)
+    // Step 16: Customer Audit Timeline Button (modal is CLOSED, button is spotlighted)
     await page.click('[data-testid="tour-next-btn"]');
-    await sleep(1000);
-    const timelineStepTitle = await page.$eval("#tour-popover-title", (el) => el.innerText);
-    console.log(`✓ Timeline Step: "${timelineStepTitle}"`);
-    
-    // Verify that actual application CustomerTimeline modal is rendered
-    const hasTimelineDialog = await page.$eval("aside, [role='dialog']", (el) => Boolean(el)).catch(() => false);
-    console.log(`✓ Actual CustomerTimeline dialog visible: ${hasTimelineDialog}`);
-    testResults["Real CustomerTimeline modal"] = hasTimelineDialog ? "PASS" : "FAIL";
+    await sleep(600);
+    const timelineBtnTitle = await page.$eval("#tour-popover-title", (el) => el.innerText);
+    const timelineBtnText = await page.$eval('[data-testid="tour-next-btn"]', (el) => el.innerText);
+    console.log(`✓ Timeline Button Step: "${timelineBtnTitle}" (Next button: "${timelineBtnText}")`);
+    const timelineOpenBefore = await page.$('[data-testid="customer-timeline-modal"]');
+    testResults["Timeline button spotlighted before modal opens"] = timelineBtnText.includes("Open Timeline") && !timelineOpenBefore ? "PASS" : "FAIL";
+
+    // Step 17: Customer Audit Timeline Modal (modal is OPEN, dialog card is spotlighted)
+    await page.click('[data-testid="tour-next-btn"]');
+    await page.waitForSelector('[data-testid="customer-timeline-modal"]', { timeout: 10000 });
+    const timelineModalTitle = await page.$eval("#tour-popover-title", (el) => el.innerText);
+    console.log(`✓ Timeline Modal Step: "${timelineModalTitle}"`);
+    testResults["Real CustomerTimeline modal"] = "PASS";
     await saveScreenshot(page, "walkthrough_customer_timeline_modal.png");
 
-    // Step: Multilingual Outreach (opens outbox modal)
+    // Step 18: Multilingual Outreach Button (modal is CLOSED, button is spotlighted)
     await page.click('[data-testid="tour-next-btn"]');
-    await sleep(1000);
-    const outboxStepTitle = await page.$eval("#tour-popover-title", (el) => el.innerText);
-    console.log(`✓ Outbox Step: "${outboxStepTitle}"`);
+    await sleep(600);
+    const outreachBtnTitle = await page.$eval("#tour-popover-title", (el) => el.innerText);
+    const outreachBtnText = await page.$eval('[data-testid="tour-next-btn"]', (el) => el.innerText);
+    console.log(`✓ Outreach Button Step: "${outreachBtnTitle}" (Next button: "${outreachBtnText}")`);
+    const timelineOpenAfter = await page.$('[data-testid="customer-timeline-modal"]');
+    const outboxOpenBefore = await page.$('[data-testid="mock-outbox-modal"]');
+    testResults["Timeline modal closed & Outreach button spotlighted"] = outreachBtnText.includes("Preview Outreach") && !timelineOpenAfter && !outboxOpenBefore ? "PASS" : "FAIL";
 
-    // Verify that actual MockOutboxModal is rendered
-    const outboxVisible = await page.$eval('[role="dialog"]', (el) => el.innerText.includes("Outreach") || el.innerText.includes("Simulated")).catch(() => false);
-    console.log(`✓ Actual MockOutboxModal dialog visible: ${outboxVisible}`);
-    testResults["Real MockOutboxModal"] = outboxVisible ? "PASS" : "FAIL";
+    // Step 19: Multilingual Outreach Modal (outbox modal is OPEN, dialog card is spotlighted)
+    await page.click('[data-testid="tour-next-btn"]');
+    await page.waitForSelector('[data-testid="mock-outbox-modal"]', { timeout: 10000 });
+    const outboxModalTitle = await page.$eval("#tour-popover-title", (el) => el.innerText);
+    console.log(`✓ Outbox Modal Step: "${outboxModalTitle}"`);
+    testResults["Real MockOutboxModal"] = "PASS";
     await saveScreenshot(page, "walkthrough_outbox_preview_modal.png");
 
     // -------------------------------------------------------------
@@ -257,19 +271,27 @@ async function runWalkthroughVerification() {
     // -------------------------------------------------------------
     console.log("\n--- TEST 7: Return to /console & Benchmark Modal ---");
     
-    // Click Next from Outbox step -> navigates to /console and opens BenchmarkModal
+    // Step 20: Click Next from Outbox step -> navigates to /console, benchmark button is spotlighted (modal CLOSED)
     await page.click('[data-testid="tour-next-btn"]');
     await page.waitForFunction(() => window.location.pathname === "/console", { timeout: 10000 });
     await page.waitForSelector('[data-testid="open-benchmark-btn"]', { timeout: 10000 });
-    await sleep(1000);
+    await sleep(800);
 
     const backUrl = page.url();
     console.log(`✓ Returned to URL: ${backUrl}`);
-    
-    // Verify BenchmarkModal opened
-    const benchmarkVisible = await page.$eval('[role="dialog"]', (el) => el.innerText.includes("Benchmark") || el.innerText.includes("Multi-Seed")).catch(() => false);
-    console.log(`✓ Actual BenchmarkModal dialog visible: ${benchmarkVisible}`);
-    testResults["Real BenchmarkModal on console"] = backUrl.endsWith("/console") && benchmarkVisible ? "PASS" : "FAIL";
+    const benchmarkBtnTitle = await page.$eval("#tour-popover-title", (el) => el.innerText);
+    const benchmarkBtnText = await page.$eval('[data-testid="tour-next-btn"]', (el) => el.innerText);
+    const outboxOpenAfter = await page.$('[data-testid="mock-outbox-modal"]');
+    const benchmarkOpenBefore = await page.$('[data-testid="benchmark-modal"]');
+    console.log(`✓ Benchmark Button Step: "${benchmarkBtnTitle}" (Next button: "${benchmarkBtnText}")`);
+    testResults["Console return & Benchmark button spotlighted"] = backUrl.endsWith("/console") && benchmarkBtnText.includes("View Benchmark") && !outboxOpenAfter && !benchmarkOpenBefore ? "PASS" : "FAIL";
+
+    // Step 21: Benchmark Modal Step (BenchmarkModal is OPEN, dialog card is spotlighted)
+    await page.click('[data-testid="tour-next-btn"]');
+    await page.waitForSelector('[data-testid="benchmark-modal"]', { timeout: 10000 });
+    const benchmarkModalTitle = await page.$eval("#tour-popover-title", (el) => el.innerText);
+    console.log(`✓ Benchmark Modal Step: "${benchmarkModalTitle}"`);
+    testResults["Real BenchmarkModal on console"] = "PASS";
     await saveScreenshot(page, "walkthrough_benchmark_modal.png");
 
     // -------------------------------------------------------------
@@ -277,11 +299,13 @@ async function runWalkthroughVerification() {
     // -------------------------------------------------------------
     console.log("\n--- TEST 8: Walkthrough Completion & Persistence ---");
     
-    // Advance to Final Completion Step
+    // Step 22: Advance to Final Completion Step (BenchmarkModal cleanly CLOSED!)
     await page.click('[data-testid="tour-next-btn"]');
     await sleep(600);
     const finishStepTitle = await page.$eval("#tour-popover-title", (el) => el.innerText);
     console.log(`✓ Final step: "${finishStepTitle}"`);
+    const benchmarkOpenOnComplete = await page.$('[data-testid="benchmark-modal"]');
+    testResults["Benchmark modal cleanly closed on complete step"] = !benchmarkOpenOnComplete && finishStepTitle.includes("Complete") ? "PASS" : "FAIL";
 
     // Click Finish Walkthrough
     await page.click('[data-testid="tour-finish-btn"]');

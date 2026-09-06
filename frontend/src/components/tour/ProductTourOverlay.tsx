@@ -98,11 +98,16 @@ export const ProductTourOverlay: React.FC = () => {
   // Auto-scroll target into view
   useEffect(() => {
     if (targetElement && currentStep) {
-      targetElement.scrollIntoView({
-        behavior: isReducedMotion ? "auto" : "smooth",
-        block: "center",
-        inline: "nearest",
-      });
+      const isFixed =
+        window.getComputedStyle(targetElement).position === "fixed" ||
+        Boolean(targetElement.closest(".fixed"));
+      if (!isFixed) {
+        targetElement.scrollIntoView({
+          behavior: isReducedMotion ? "auto" : "smooth",
+          block: "center",
+          inline: "nearest",
+        });
+      }
       // Re-read rect after scroll completes
       const timer = setTimeout(updateRect, 300);
       return () => clearTimeout(timer);
@@ -166,7 +171,7 @@ export const ProductTourOverlay: React.FC = () => {
         top = targetRect.top + targetRect.height / 2 - pHeight / 2;
       } else if (placement === "right") {
         left = targetRect.right + 14;
-        top = targetRect.top + targetRect.height / 2 - pHeight / 2;
+        top = Math.max(16, targetRect.top + 32);
       } else {
         // Default "bottom"
         top = targetRect.bottom + 14;
@@ -212,13 +217,13 @@ export const ProductTourOverlay: React.FC = () => {
     <div
       role="region"
       aria-label="Interactive Product Walkthrough"
-      className="fixed inset-0 z-50 pointer-events-none select-none"
+      className="fixed inset-0 z-[60] pointer-events-none select-none"
     >
       {/* 1. SVG Spotlight Mask */}
       {targetRect && (
         <svg
           data-testid="product-tour-spotlight"
-          className="fixed inset-0 w-full h-full pointer-events-none z-40 transition-all duration-300"
+          className="fixed inset-0 w-full h-full pointer-events-none z-[60] transition-all duration-300"
         >
           <defs>
             <mask id="revora-tour-mask">
@@ -273,7 +278,7 @@ export const ProductTourOverlay: React.FC = () => {
           maxWidth: "calc(100vw - 24px)",
           width: "380px",
         }}
-        className="pointer-events-auto z-50 bg-[#1B2140] border border-[#2A3362] rounded-xl shadow-2xl p-4 sm:p-5 flex flex-col gap-3.5 transition-all duration-200 animate-in fade-in zoom-in-95"
+        className="pointer-events-auto z-[70] bg-[#1B2140] border border-[#2A3362] rounded-xl shadow-2xl p-4 sm:p-5 flex flex-col gap-3.5 transition-all duration-200 animate-in fade-in zoom-in-95"
       >
         {/* Header: Step Counter, Badge, & Dismiss */}
         <div className="flex items-center justify-between gap-2 border-b border-[#2A3362]/80 pb-2.5">

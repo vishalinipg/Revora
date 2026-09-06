@@ -126,6 +126,8 @@ export const TourProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Modal triggering
     if (next.modalToOpen) {
       setActiveModal(next.modalToOpen);
+    } else {
+      setActiveModal(null);
     }
 
     // Handle route transition if needed

@@ -24,7 +24,7 @@ import { api } from "../../../../lib/api";
 import { useTour } from "../../../../components/tour/TourContext";
 
 export default function InspectPaymentPage() {
-  const { activeModal, setActiveModal, isActive } = useTour();
+  const { activeModal, setActiveModal, isActive, currentStep, nextStep } = useTour();
   const params = useParams();
   const router = useRouter();
   const rawId = params?.id;
@@ -105,6 +105,10 @@ export default function InspectPaymentPage() {
 
   // 3. Open Timeline
   const handleOpenTimeline = async () => {
+    if (isActive && currentStep?.id === "inspect-timeline-btn") {
+      nextStep();
+      return;
+    }
     if (!paymentId) return;
     setIsTimelineOpen(true);
     setIsLoadingTimeline(true);
@@ -116,6 +120,15 @@ export default function InspectPaymentPage() {
       setTimelineError(err.message || "Failed to load customer audit timeline.");
     } finally {
       setIsLoadingTimeline(false);
+    }
+  };
+
+  // 4. Open Outreach
+  const handleOpenOutreach = () => {
+    if (isActive && currentStep?.id === "inspect-outreach-btn") {
+      nextStep();
+    } else {
+      setIsOutboxOpen(true);
     }
   };
 
@@ -172,7 +185,7 @@ export default function InspectPaymentPage() {
             error={detailError}
             onRerunDecision={handleExecuteDecision}
             isExecutingDecision={isExecutingDecision}
-            onOpenOutreach={() => setIsOutboxOpen(true)}
+            onOpenOutreach={handleOpenOutreach}
             onOpenTimeline={handleOpenTimeline}
             lastDecisionResult={lastDecisionResult}
           />
@@ -188,6 +201,9 @@ export default function InspectPaymentPage() {
           onClose={() => {
             setIsTimelineOpen(false);
             setActiveModal(null);
+            if (isActive && currentStep?.id === "inspect-timeline-modal") {
+              nextStep();
+            }
           }}
           paymentId={paymentId}
         />
@@ -200,6 +216,9 @@ export default function InspectPaymentPage() {
           onClose={() => {
             setIsOutboxOpen(false);
             setActiveModal(null);
+            if (isActive && currentStep?.id === "inspect-outreach-modal") {
+              nextStep();
+            }
           }}
         />
       )}

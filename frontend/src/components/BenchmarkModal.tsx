@@ -41,7 +41,10 @@ export const BenchmarkModal: React.FC<BenchmarkModalProps> = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#0a0d18]/80 backdrop-blur-sm">
-      <div className="bg-[#1B2140] border border-[#2A3362] rounded-lg w-full max-w-4xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div
+        data-testid="benchmark-modal"
+        className="bg-[#1B2140] border border-[#2A3362] rounded-lg w-full max-w-4xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+      >
         {/* Header */}
         <div className="p-3.5 sm:p-4 border-b border-[#2A3362] bg-[#171D36] flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5">

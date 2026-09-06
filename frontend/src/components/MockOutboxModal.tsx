@@ -47,7 +47,10 @@ export const MockOutboxModal: React.FC<MockOutboxModalProps> = ({ paymentId, onC
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm">
-      <div className="bg-[#1B2140] border border-[#2A3362] rounded-xl w-full max-w-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div
+        data-testid="mock-outbox-modal"
+        className="bg-[#1B2140] border border-[#2A3362] rounded-xl w-full max-w-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+      >
         {/* Persistent Simulation Warning Watermark Banner */}
         <div className="bg-[#E8A33D] text-[#12172B] px-3 sm:px-4 py-2 text-center font-bold text-[11px] sm:text-xs tracking-wider uppercase flex flex-wrap items-center justify-center gap-1.5">
           <ShieldAlert className="w-4 h-4 flex-shrink-0" />

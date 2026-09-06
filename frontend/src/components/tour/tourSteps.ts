@@ -224,7 +224,22 @@ export const TOUR_STEPS: TourStep[] = [
       "Inspect the chronological audit trail of all webhook events, decisions, retry attempts, and simulated communications for this customer.",
     nextButtonLabel: "Open Timeline →",
     placement: "bottom",
+  },
+  {
+    id: "inspect-timeline-modal",
+    route: "/console/inspect",
+    targetSelector: '[data-testid="customer-timeline-modal"]',
+    title: "Lifecycle Event Timeline",
+    explanation:
+      "Every lifecycle event is stamped with distinct provenance: [OBSERVED] banking webhooks, [DECISION] deterministic engine evaluations, and [SIMULATED OUTREACH] safety drafts.",
+    badge: {
+      text: "[AUDIT TRAIL]",
+      className: "bg-[#7BA88C]/15 text-[#7BA88C] border-[#7BA88C]/40",
+    },
+    nextButtonLabel: "Next →",
+    placement: "right",
     modalToOpen: "timeline",
+    closeModalBeforeNext: true,
   },
   {
     id: "inspect-outreach-btn",
@@ -235,6 +250,20 @@ export const TOUR_STEPS: TourStep[] = [
       "Preview customer outreach in English, Hinglish, or Tanglish with rigid safety guardrails: zero OTP requests, locked payment amounts, and deterministic template fallback.",
     nextButtonLabel: "Preview Outreach →",
     placement: "bottom",
+  },
+  {
+    id: "inspect-outreach-modal",
+    route: "/console/inspect",
+    targetSelector: '[data-testid="mock-outbox-modal"]',
+    title: "Multilingual Mock Outbox",
+    explanation:
+      "Outreach templates strictly enforce customer protection rules. If an account is hard-blocked or escalates to human review, communication is automatically suppressed with zero messages dispatched.",
+    badge: {
+      text: "[SIMULATED ONLY]",
+      className: "bg-[#64B5F6]/15 text-[#64B5F6] border-[#64B5F6]/40",
+    },
+    nextButtonLabel: "Next →",
+    placement: "right",
     modalToOpen: "outbox",
     closeModalBeforeNext: true,
   },
@@ -251,7 +280,22 @@ export const TOUR_STEPS: TourStep[] = [
       "Explore comprehensive evaluation across 5 random seeds comparing Revora against standard merchant retry rules.",
     nextButtonLabel: "View Benchmark →",
     placement: "bottom",
+  },
+  {
+    id: "console-benchmark-modal",
+    route: "/console",
+    targetSelector: '[data-testid="benchmark-modal"]',
+    title: "5-Seed Robustness & Lift Analysis",
+    explanation:
+      "Held-out test cohort evaluated across 5 distinct random seeds (42, 100, 555, 2026, 9999). Demonstrates statistical stability, +17.8% recovery lift, and -19.2% futile retries saved against merchant control baselines.",
+    badge: {
+      text: "[SIMULATION ONLY]",
+      className: "bg-[#64B5F6]/15 text-[#64B5F6] border-[#64B5F6]/40",
+    },
+    nextButtonLabel: "Next →",
+    placement: "right",
     modalToOpen: "benchmark",
+    closeModalBeforeNext: true,
   },
   {
     id: "walkthrough-complete",

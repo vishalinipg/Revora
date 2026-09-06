@@ -13,7 +13,7 @@ import { api } from "../../lib/api";
 import { useTour } from "../../components/tour/TourContext";
 
 export default function OperatorConsolePage() {
-  const { activeModal, setActiveModal, setSelectedPaymentId: setTourSelectedPaymentId, isActive } = useTour();
+  const { activeModal, setActiveModal, setSelectedPaymentId: setTourSelectedPaymentId, isActive, currentStep, nextStep } = useTour();
 
   // Global / Executive Metrics State
   const [metricsData, setMetricsData] = useState<EvaluationSummaryResponse | null>(null);
@@ -115,11 +115,19 @@ export default function OperatorConsolePage() {
     fetchPayments();
   };
 
+  const handleOpenBenchmark = () => {
+    if (isActive && currentStep?.id === "console-benchmark-btn") {
+      nextStep();
+    } else {
+      setIsBenchmarkOpen(true);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-[#12172B] text-[#F2F0EA] font-sans antialiased selection:bg-[#E8A33D]/20 selection:text-[#E8A33D]">
       {/* Top Application Bar */}
       <Header
-        onOpenBenchmark={() => setIsBenchmarkOpen(true)}
+        onOpenBenchmark={handleOpenBenchmark}
         onRefreshAll={handleRefreshAll}
         isRefreshing={isLoadingMetrics || isLoadingPayments}
       />
@@ -161,6 +169,9 @@ export default function OperatorConsolePage() {
           onClose={() => {
             setIsBenchmarkOpen(false);
             setActiveModal(null);
+            if (isActive && currentStep?.id === "console-benchmark-modal") {
+              nextStep();
+            }
           }}
         />
       )}
