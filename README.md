@@ -26,7 +26,7 @@ Recover legitimate recurring-payment revenue intelligently — while determinist
 | :--- | :--- | :--- |
 | 🚀 **Live Demo** | Cloud-hosted web application | [https://revora-bice.vercel.app/](https://revora-bice.vercel.app/) |
 | 💻 **GitHub Repository** | Source code, test suites & architecture documentation | [https://github.com/vishalinipg/Revora](https://github.com/vishalinipg/Revora) |
-| 🎥 **Pitch / Demo Video** | Project overview and system demonstration | [https://www.youtube.com/@vishalinipg](https://www.youtube.com/@vishalinipg) |
+| 🎥 **Pitch / Demo Video** | Project overview and system demonstration | [https://www.youtube.com/@vishalinipg](https://youtu.be/ReCY_6PyoLw) |
 
 ---
 
