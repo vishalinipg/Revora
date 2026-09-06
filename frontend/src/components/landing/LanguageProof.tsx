@@ -70,17 +70,17 @@ export const LanguageProof: React.FC = () => {
         {/* Left Column: Interactive Language Message Preview (7 cols) */}
         <div className="lg:col-span-7 bg-[#1B2140] border border-[#2A3362] rounded-lg p-5 flex flex-col gap-4">
           {/* Language Selector Tabs */}
-          <div className="flex items-center justify-between pb-3 border-b border-[#2A3362]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#2A3362]">
             <div className="flex items-center gap-2">
               <MessageSquare className="w-4 h-4 text-[#E8A33D]" />
               <span className="text-xs font-mono font-semibold text-[#F2F0EA]">Outreach Drafts</span>
             </div>
 
-            <div className="flex items-center gap-1.5 p-1 bg-[#141930] rounded-md border border-[#2A3362]">
+            <div className="flex flex-wrap items-center gap-1 p-1 bg-[#141930] rounded-lg border border-[#2A3362]">
               <button
                 data-testid="lang-tab-en"
                 onClick={() => setSelectedLang("en")}
-                className={`px-2.5 py-1 rounded text-xs font-mono transition-colors ${
+                className={`min-h-[38px] sm:min-h-[32px] px-3 py-1.5 rounded-md text-xs font-mono transition-colors cursor-pointer ${
                   selectedLang === "en"
                     ? "bg-[#E8A33D] text-[#12172B] font-bold shadow-sm"
                     : "text-[#B4B9D2] hover:text-[#F2F0EA]"
@@ -91,7 +91,7 @@ export const LanguageProof: React.FC = () => {
               <button
                 data-testid="lang-tab-hi"
                 onClick={() => setSelectedLang("hi")}
-                className={`px-2.5 py-1 rounded text-xs font-mono transition-colors ${
+                className={`min-h-[38px] sm:min-h-[32px] px-3 py-1.5 rounded-md text-xs font-mono transition-colors cursor-pointer ${
                   selectedLang === "hi"
                     ? "bg-[#E8A33D] text-[#12172B] font-bold shadow-sm"
                     : "text-[#B4B9D2] hover:text-[#F2F0EA]"
@@ -102,7 +102,7 @@ export const LanguageProof: React.FC = () => {
               <button
                 data-testid="lang-tab-ta"
                 onClick={() => setSelectedLang("ta")}
-                className={`px-2.5 py-1 rounded text-xs font-mono transition-colors ${
+                className={`min-h-[38px] sm:min-h-[32px] px-3 py-1.5 rounded-md text-xs font-mono transition-colors cursor-pointer ${
                   selectedLang === "ta"
                     ? "bg-[#E8A33D] text-[#12172B] font-bold shadow-sm"
                     : "text-[#B4B9D2] hover:text-[#F2F0EA]"
@@ -114,35 +114,35 @@ export const LanguageProof: React.FC = () => {
           </div>
 
           {/* Active Language Metadata */}
-          <div className="flex items-center justify-between text-xs font-mono text-[#7E85A6]">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-[#7E85A6]">
             <span>Channel: <strong className="text-[#F2F0EA]">{activeSample.channel}</strong></span>
             <span>Template: <code className="text-[#E8A33D]">{activeSample.templateId}</code></span>
           </div>
 
-          <p className="text-xs text-[#B4B9D2] italic font-sans">
+          <p className="text-xs text-[#B4B9D2] italic font-sans leading-relaxed">
             {activeSample.tagline}
           </p>
 
           {/* Message Preview Box */}
-          <div className="bg-[#141930] border border-[#2A3362] rounded-lg p-4 font-sans text-sm text-[#F2F0EA] leading-relaxed relative">
+          <div className="bg-[#141930] border border-[#2A3362] rounded-lg p-4 font-sans text-xs sm:text-sm text-[#F2F0EA] leading-relaxed relative">
             {/* Simulation Watermark Banner */}
-            <div className="mb-2.5 pb-2 border-b border-[#2A3362]/60 flex items-center justify-between text-[11px] font-mono text-[#E8A33D]">
+            <div className="mb-2.5 pb-2 border-b border-[#2A3362]/60 flex flex-wrap items-center justify-between gap-1 text-[11px] font-mono text-[#E8A33D]">
               <span className="flex items-center gap-1.5 font-bold">
-                <Lock className="w-3 h-3 text-[#E8A33D]" />
-                SIMULATED — NO MESSAGE SENT
+                <Lock className="w-3 h-3 text-[#E8A33D] flex-shrink-0" />
+                <span>SIMULATED — NO MESSAGE SENT</span>
               </span>
-              <span className="text-[#7E85A6]">Zero Real SMS/WhatsApp Gateways</span>
+              <span className="text-[#7E85A6]">Zero Real Gateways</span>
             </div>
 
-            <p className="whitespace-pre-line">
+            <p className="whitespace-pre-line break-words">
               {activeSample.body}
             </p>
           </div>
 
           {/* Validation Footnote */}
-          <div className="text-[11px] font-mono text-[#7BA88C] flex items-center gap-1.5 pt-1">
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#7BA88C]" />
-            <span>Safety validator checks: PASS (No credentials requested · Amount locked · Dynamic link verified)</span>
+          <div className="text-[11px] font-mono text-[#7BA88C] flex items-start gap-1.5 pt-1 break-words">
+            <CheckCircle2 className="w-3.5 h-3.5 text-[#7BA88C] flex-shrink-0 mt-0.5" />
+            <span className="leading-snug">Safety checks: PASS (Zero credential solicitation · Amount locked · Dynamic link verified)</span>
           </div>
         </div>
 

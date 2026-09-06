@@ -103,48 +103,49 @@ export default function InspectPaymentPage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#12172B] text-[#F2F0EA] font-sans antialiased selection:bg-[#E8A33D]/20 selection:text-[#E8A33D]">
       {/* Top Application Bar */}
-      <header className="border-b border-[#2A3362] bg-[#171D36]/90 backdrop-blur-md sticky top-0 z-30 px-6 py-3.5 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
+      <header className="border-b border-[#2A3362] bg-[#171D36]/90 backdrop-blur-md sticky top-0 z-30 px-3 sm:px-6 py-3 sm:py-3.5 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-4">
           <Link
             href="/console"
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-[#222950] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] transition-colors shadow-sm cursor-pointer"
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-mono font-semibold bg-[#222950] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] transition-colors shadow-sm cursor-pointer min-h-[44px]"
           >
             <ArrowLeft className="w-4 h-4 text-[#E8A33D]" />
-            <span>Back to Payments Queue</span>
+            <span>Back to Queue</span>
           </Link>
 
           <div className="h-5 w-px bg-[#2A3362] hidden sm:block" />
 
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-mono text-[#7E85A6] uppercase tracking-wider">
-              Inspecting Payment
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-xs font-mono text-[#7E85A6] uppercase tracking-wider hidden xs:inline">
+              Inspecting
             </span>
-            <span className="text-sm font-mono font-bold text-[#F2F0EA] px-2.5 py-0.5 rounded-md bg-[#222950] border border-[#2A3362]">
+            <span className="text-xs sm:text-sm font-mono font-bold text-[#F2F0EA] px-2.5 py-1 rounded-md bg-[#222950] border border-[#2A3362] break-all">
               {paymentId}
             </span>
           </div>
         </div>
 
         {/* Status Indicators */}
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-3 py-1 rounded-md bg-[#222950]/80 border border-[#2A3362] text-[11px] font-mono text-[#B4B9D2]">
-            <Shield className="w-3.5 h-3.5 text-[#E8A33D]" />
-            <span>SIMULATION ENVIRONMENT · NO REAL MONEY MOVED</span>
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+          <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-md bg-[#222950]/80 border border-[#2A3362] text-[11px] font-mono text-[#B4B9D2] min-h-[38px]">
+            <Shield className="w-3.5 h-3.5 text-[#E8A33D] flex-shrink-0" />
+            <span className="hidden sm:inline">SIMULATION ENVIRONMENT · </span>
+            <span className="text-[#E8A33D] font-medium">NO REAL MONEY MOVED</span>
           </div>
 
           <button
             onClick={() => fetchPaymentDetail(paymentId)}
             disabled={isLoadingDetail}
-            className="p-1.5 rounded-lg bg-[#222950] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] transition-colors cursor-pointer disabled:opacity-50"
+            className="p-2 min-h-[40px] min-w-[40px] rounded-lg bg-[#222950] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] flex items-center justify-center transition-colors cursor-pointer disabled:opacity-50"
             title="Refresh payment signals"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isLoadingDetail ? "animate-spin" : ""}`} />
+            <RefreshCw className={`w-4 h-4 ${isLoadingDetail ? "animate-spin" : ""}`} />
           </button>
         </div>
       </header>
 
       {/* Main Inspection Body */}
-      <main className="flex-1 max-w-[1720px] w-full mx-auto px-6 py-6 flex flex-col gap-6">
+      <main className="flex-1 max-w-[1720px] w-full mx-auto px-3 sm:px-6 py-4 sm:py-6 flex flex-col gap-6">
         <section aria-label="Payment Operations Console" className="flex-1 w-full">
           <DecisionInspector
             paymentDetail={paymentDetail}

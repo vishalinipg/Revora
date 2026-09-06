@@ -84,7 +84,7 @@ export const MechanismDiagram: React.FC = () => {
             >
               <div>
                 {/* Header with Provenance Badge */}
-                <div className="flex items-center justify-between gap-2 mb-3">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                   <div className="flex items-center gap-2">
                     <div className="p-1.5 rounded bg-[#222950] text-[#E8A33D] border border-[#2A3362]">
                       <Icon className="w-4 h-4" />
@@ -123,16 +123,16 @@ export const MechanismDiagram: React.FC = () => {
       </div>
 
       {/* Provenance Legend / Guardrail Summary */}
-      <div className="mt-8 p-4 rounded-lg bg-[#141930] border border-[#2A3362] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#7E85A6]">
-        <div className="flex flex-wrap items-center gap-4">
+      <div className="mt-8 p-4 rounded-lg bg-[#141930] border border-[#2A3362] flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs font-mono text-[#7E85A6]">
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-4">
           <span className="text-[#F2F0EA] font-semibold">Provenance Key:</span>
-          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#E8A33D]" /> Observed Webhook</span>
-          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#7BA88C]" /> ML Signal</span>
-          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#B4B9D2]" /> Deterministic Rule</span>
-          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#64B5F6]" /> Simulated Outreach</span>
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#E8A33D] flex-shrink-0" /> Observed Webhook</span>
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#7BA88C] flex-shrink-0" /> ML Signal</span>
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#B4B9D2] flex-shrink-0" /> Deterministic Rule</span>
+          <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#64B5F6] flex-shrink-0" /> Simulated Outreach</span>
         </div>
-        <div className="flex items-center gap-1.5 text-[#7BA88C]">
-          <ShieldCheck className="w-4 h-4 text-[#7BA88C]" />
+        <div className="flex items-center gap-1.5 text-[#7BA88C] text-[11px] sm:text-xs">
+          <ShieldCheck className="w-4 h-4 text-[#7BA88C] flex-shrink-0" />
           <span>Zero Latent Oracle Leakage Across Operational Rails</span>
         </div>
       </div>

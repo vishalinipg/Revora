@@ -79,9 +79,9 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
   return (
     <div className="flex flex-col h-full bg-[#1B2140] border border-[#2A3362] rounded-xl overflow-hidden shadow-sm">
       {/* Top Inspector Header */}
-      <div className="p-5 border-b border-[#2A3362] bg-[#171D36] flex flex-wrap items-center justify-between gap-4">
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-3">
+      <div className="p-4 sm:p-5 border-b border-[#2A3362] bg-[#171D36] flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+        <div className="space-y-1.5 max-w-full">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <span className="text-xs font-mono text-[#7E85A6]">INSPECTING PAYMENT</span>
             <span className="text-sm font-mono font-bold text-[#F2F0EA] px-2.5 py-0.5 rounded-md bg-[#222950] border border-[#2A3362]">
               {payment.payment_id}
@@ -90,11 +90,11 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
               RISK: {riskBadge.label} ({risk_assessment.risk_score.toFixed(2)})
             </span>
           </div>
-          <div className="text-xs text-[#B4B9D2] flex flex-wrap items-center gap-3">
+          <div className="text-xs text-[#B4B9D2] flex flex-wrap items-center gap-2 sm:gap-3 leading-snug">
             <span>Customer: <strong className="text-[#F2F0EA]">{customer.name}</strong> <span className="text-[#7E85A6] font-mono">({customer.customer_id})</span></span>
-            <span className="text-[#7E85A6]">·</span>
+            <span className="text-[#7E85A6] hidden sm:inline">·</span>
             <span>Plan: <strong className="text-[#F2F0EA]">{customer.subscription_plan}</strong></span>
-            <span className="text-[#7E85A6]">·</span>
+            <span className="text-[#7E85A6] hidden sm:inline">·</span>
             <span>Language: <strong className="text-[#E8A33D] font-mono">{customer.preferred_language}</strong></span>
           </div>
         </div>
@@ -104,9 +104,9 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
       </div>
 
       {/* Main Inspection Body */}
-      <div className="flex-1 overflow-y-auto p-5 space-y-5">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 sm:space-y-5">
         {/* Row 1: Decision Banner & Execution Controls */}
-        <div className="p-5 rounded-xl bg-[#222950] border border-[#2A3362] relative overflow-hidden shadow-sm space-y-4">
+        <div className="p-4 sm:p-5 rounded-xl bg-[#222950] border border-[#2A3362] relative overflow-hidden shadow-sm space-y-4">
           {/* Top Row: Engine Identity & Operator Action Buttons */}
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3.5 pb-3.5 border-b border-[#2A3362]/70">
             <div className="flex items-center gap-3">
@@ -114,22 +114,22 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
                 <Cpu className="w-4 h-4" />
               </div>
               <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
-                <span className="font-semibold text-xs font-mono text-[#F2F0EA] tracking-wide uppercase whitespace-nowrap">
+                <span className="font-semibold text-xs font-mono text-[#F2F0EA] tracking-wide uppercase">
                   Deterministic Revora Decision Engine
                 </span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#1B2140] text-[#B4B9D2] border border-[#2A3362] whitespace-nowrap">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#1B2140] text-[#B4B9D2] border border-[#2A3362]">
                   {lastDecisionResult?.policy_version || "REVORA_POLICY_V1"}
                 </span>
               </div>
             </div>
 
-            {/* Operator Actions in a clean, unified button group */}
-            <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap">
+            {/* Operator Actions in a clean, responsive button group */}
+            <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
               <button
                 data-testid="rerun-decision-btn"
                 onClick={onRerunDecision}
                 disabled={isExecutingDecision}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#E8A33D] hover:bg-[#E8A33D]/90 text-[#12172B] shadow-sm transition-all disabled:opacity-50 font-mono cursor-pointer whitespace-nowrap flex-shrink-0"
+                className="flex-1 sm:flex-initial min-h-[44px] sm:min-h-[36px] inline-flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#E8A33D] hover:bg-[#E8A33D]/90 text-[#12172B] shadow-sm transition-all disabled:opacity-50 font-mono cursor-pointer whitespace-nowrap"
               >
                 <Play className={`w-3.5 h-3.5 fill-current ${isExecutingDecision ? "animate-spin" : ""}`} />
                 <span>{isExecutingDecision ? "Executing..." : "Re-run Engine"}</span>
@@ -138,7 +138,7 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
               <button
                 data-testid="preview-outreach-btn"
                 onClick={onOpenOutreach}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#1B2140] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] transition-colors cursor-pointer whitespace-nowrap flex-shrink-0"
+                className="flex-1 sm:flex-initial min-h-[44px] sm:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#1B2140] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] transition-colors cursor-pointer whitespace-nowrap"
               >
                 <MessageSquare className="w-3.5 h-3.5 text-[#E8A33D]" />
                 <span>Preview Outreach</span>
@@ -147,7 +147,7 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
               <button
                 data-testid="timeline-btn"
                 onClick={onOpenTimeline}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#1B2140] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] transition-colors cursor-pointer whitespace-nowrap flex-shrink-0"
+                className="flex-1 sm:flex-initial min-h-[44px] sm:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#1B2140] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] transition-colors cursor-pointer whitespace-nowrap"
               >
                 <History className="w-3.5 h-3.5 text-[#B4B9D2]" />
                 <span>Timeline</span>
@@ -196,7 +196,7 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-2.5 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
               <div className="p-2.5 rounded-lg bg-[#222950] border border-[#2A3362]">
                 <div className="text-[10px] text-[#7E85A6] uppercase font-mono">Amount Due</div>
                 <div className="text-sm font-bold font-mono text-[#F2F0EA] tabular-nums mt-0.5">
@@ -345,21 +345,30 @@ export const DecisionInspector: React.FC<DecisionInspectorProps> = ({
                   const pctWidth = Math.min(100, Math.abs(feat.impact) * 50);
 
                   return (
-                    <div key={feat.feature} className="flex items-center gap-2 text-xs font-mono">
-                      <div className="w-44 text-[#B4B9D2] truncate" title={feat.feature}>
-                        {feat.feature}
+                    <div
+                      key={feat.feature}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 text-xs font-mono p-1.5 rounded bg-[#1B2140]/60 border border-[#2A3362]/40"
+                    >
+                      <div className="flex items-center justify-between gap-2 min-w-0 flex-1">
+                        <span className="text-[#B4B9D2] truncate" title={feat.feature}>
+                          {feat.feature}
+                        </span>
+                        <span className="text-[#7E85A6] text-right flex-shrink-0">
+                          {feat.raw_value}
+                        </span>
                       </div>
-                      <div className="w-16 text-right text-[#7E85A6]">
-                        {feat.raw_value}
-                      </div>
-                      <div className="flex-1 flex items-center gap-1.5">
-                        <div className="w-24 bg-[#1B2140] h-2 rounded-full overflow-hidden border border-[#2A3362]">
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        <div className="w-20 sm:w-24 bg-[#12172B] h-2 rounded-full overflow-hidden border border-[#2A3362]">
                           <div
                             className={`h-full ${isPositive ? "bg-[#7BA88C]" : "bg-[#B5615A]"}`}
                             style={{ width: `${pctWidth}%` }}
                           />
                         </div>
-                        <span className={`text-[11px] font-bold ${isPositive ? "text-[#7BA88C]" : "text-[#B5615A]"}`}>
+                        <span
+                          className={`text-[11px] font-bold min-w-[38px] text-right ${
+                            isPositive ? "text-[#7BA88C]" : "text-[#B5615A]"
+                          }`}
+                        >
                           {isPositive ? `+${feat.impact.toFixed(2)}` : feat.impact.toFixed(2)}
                         </span>
                       </div>

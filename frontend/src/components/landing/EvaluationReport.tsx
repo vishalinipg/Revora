@@ -84,10 +84,10 @@ export const EvaluationReport: React.FC = () => {
                 {/* KPI 1: Recovery Rate */}
                 <div className="bg-[#1B2140] border border-[#2A3362] rounded-lg p-4 space-y-2">
                   <div className="text-[11px] font-mono text-[#7E85A6] uppercase">Recovery Rate</div>
-                  <div className="text-3xl font-mono font-bold text-[#7BA88C] tabular-nums">
+                  <div className="text-2xl sm:text-3xl font-mono font-bold text-[#7BA88C] tabular-nums">
                     {revora ? formatPct(revora.revenue_recovery_rate_pct) : "—"}
                   </div>
-                  <div className="text-xs font-mono text-[#E8A33D] flex items-center gap-1">
+                  <div className="text-xs font-mono text-[#E8A33D] flex flex-wrap items-center gap-1">
                     <span>+{delta?.absolute_revenue_recovery_rate_delta_pct.toFixed(1)}% pts</span>
                     <span className="text-[#7E85A6]">vs {baseline ? formatPct(baseline.revenue_recovery_rate_pct) : "—"}</span>
                   </div>
@@ -96,10 +96,10 @@ export const EvaluationReport: React.FC = () => {
                 {/* KPI 2: Recovered Value */}
                 <div className="bg-[#1B2140] border border-[#2A3362] rounded-lg p-4 space-y-2">
                   <div className="text-[11px] font-mono text-[#7E85A6] uppercase">Recovered Revenue</div>
-                  <div className="text-2xl sm:text-3xl font-mono font-bold text-[#F2F0EA] tabular-nums">
+                  <div className="text-2xl sm:text-3xl font-mono font-bold text-[#F2F0EA] tabular-nums truncate" title={revora ? formatINR(revora.total_recovered_amount_inr) : undefined}>
                     {revora ? formatINR(revora.total_recovered_amount_inr) : "—"}
                   </div>
-                  <div className="text-xs font-mono text-[#7BA88C] flex items-center gap-1">
+                  <div className="text-xs font-mono text-[#7BA88C] flex flex-wrap items-center gap-1">
                     <span>+{delta ? formatINR(delta.absolute_recovered_amount_delta_inr) : "—"}</span>
                     <span className="text-[#7E85A6]">net lift</span>
                   </div>
@@ -108,10 +108,10 @@ export const EvaluationReport: React.FC = () => {
                 {/* KPI 3: Futile Retries Saved */}
                 <div className="bg-[#1B2140] border border-[#2A3362] rounded-lg p-4 space-y-2">
                   <div className="text-[11px] font-mono text-[#7E85A6] uppercase">Futile Retries Saved</div>
-                  <div className="text-3xl font-mono font-bold text-[#E8A33D] tabular-nums">
+                  <div className="text-2xl sm:text-3xl font-mono font-bold text-[#E8A33D] tabular-nums">
                     {delta?.futile_retries_prevented ?? "—"}
                   </div>
-                  <div className="text-xs font-mono text-[#B4B9D2]">
+                  <div className="text-xs font-mono text-[#B4B9D2] leading-snug">
                     Permanent failures stopped instantly
                   </div>
                 </div>
@@ -119,11 +119,11 @@ export const EvaluationReport: React.FC = () => {
                 {/* KPI 4: Stopping Compliance */}
                 <div className="bg-[#1B2140] border border-[#2A3362] rounded-lg p-4 space-y-2">
                   <div className="text-[11px] font-mono text-[#7E85A6] uppercase">Policy Compliance</div>
-                  <div className="text-3xl font-mono font-bold text-[#7BA88C] tabular-nums">
+                  <div className="text-2xl sm:text-3xl font-mono font-bold text-[#7BA88C] tabular-nums">
                     {revora ? formatPct(revora.stopping_rule_compliance_pct) : "—"}
                   </div>
-                  <div className="text-xs font-mono text-[#7E85A6] flex items-center gap-1">
-                    <ShieldCheck className="w-3 h-3 text-[#7BA88C]" />
+                  <div className="text-xs font-mono text-[#7E85A6] flex flex-wrap items-center gap-1">
+                    <ShieldCheck className="w-3 h-3 text-[#7BA88C] flex-shrink-0" />
                     <span>Zero policy breaches (Max 3, 24h)</span>
                   </div>
                 </div>

@@ -41,9 +41,16 @@ export const HeroParticleNumeral: React.FC<HeroParticleNumeralProps> = ({
     const width = container.clientWidth || 1000;
     const height = container.clientHeight || 360;
     
+    const getCameraZ = (w: number) => {
+      if (w < 380) return 130;
+      if (w < 480) return 110;
+      if (w < 768) return 92;
+      return 75;
+    };
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.z = 75;
+    camera.position.z = getCameraZ(width);
 
     let renderer: THREE.WebGLRenderer;
     try {
@@ -274,6 +281,7 @@ export const HeroParticleNumeral: React.FC<HeroParticleNumeralProps> = ({
       const newWidth = container.clientWidth || 1000;
       const newHeight = container.clientHeight || 360;
       camera.aspect = newWidth / newHeight;
+      camera.position.z = getCameraZ(newWidth);
       camera.updateProjectionMatrix();
       renderer.setSize(newWidth, newHeight);
       renderer.render(scene, camera);
@@ -301,21 +309,23 @@ export const HeroParticleNumeral: React.FC<HeroParticleNumeralProps> = ({
   };
 
   return (
-    <section className="relative w-full pt-8 pb-16 px-4 overflow-hidden flex flex-col items-center justify-center text-center">
+    <section className="relative w-full pt-8 pb-16 px-4 sm:px-6 overflow-hidden flex flex-col items-center justify-center text-center">
       {/* Background ambient lighting */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[360px] bg-[#E8A33D]/5 rounded-full blur-3xl pointer-events-none -z-10" />
 
       {/* Sub-label showing data provenance */}
-      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1B2140] border border-[#2A3362] text-[11px] font-mono text-[#B4B9D2] mb-4">
-        <span className="w-2 h-2 rounded-full bg-[#7BA88C]" />
-        <span>Live Evaluated Recovery Benchmark · Held-Out Test Cohort</span>
+      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1B2140] border border-[#2A3362] text-[11px] font-mono text-[#B4B9D2] mb-4 max-w-full text-center">
+        <span className="w-2 h-2 rounded-full bg-[#7BA88C] flex-shrink-0" />
+        <span className="truncate sm:overflow-visible sm:whitespace-normal">
+          Live Evaluated Recovery Benchmark · Held-Out Test Cohort
+        </span>
       </div>
 
       {/* Three.js Particle Numeral Container & Semantic Headline */}
       <div
         ref={containerRef}
         data-testid="hero-particle-container"
-        className="relative w-full max-w-5xl h-[260px] sm:h-[320px] md:h-[380px] flex items-center justify-center"
+        className="relative w-full max-w-5xl h-[240px] sm:h-[320px] md:h-[380px] flex items-center justify-center"
       >
         {/* WebGL Particle Canvas */}
         <canvas
@@ -327,7 +337,7 @@ export const HeroParticleNumeral: React.FC<HeroParticleNumeralProps> = ({
         {/* Semantic h1 for accessibility, SEO, and reduced-motion fallback */}
         <h1
           data-testid="hero-headline-numeral"
-          className={`font-mono font-bold tracking-tight text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-[#F2F0EA] drop-shadow-2xl tabular-nums ${
+          className={`font-mono font-bold tracking-tight text-4xl sm:text-6xl md:text-8xl lg:text-9xl text-[#F2F0EA] drop-shadow-2xl tabular-nums ${
             isReducedMotion
               ? "relative z-10 opacity-100"
               : "sr-only"
@@ -339,17 +349,17 @@ export const HeroParticleNumeral: React.FC<HeroParticleNumeralProps> = ({
       </div>
 
       {/* Merchant-perspective supporting sentence */}
-      <p className="max-w-2xl text-base sm:text-lg md:text-xl text-[#B4B9D2] font-sans font-normal mt-4 sm:mt-6 leading-relaxed px-4">
+      <p className="max-w-2xl text-sm sm:text-base md:text-lg text-[#B4B9D2] font-sans font-normal mt-3 sm:mt-6 leading-relaxed px-2 sm:px-4">
         Recurring subscription revenue recovered from silent mandate and card failures across UPI AutoPay and Indian banking rails—without blind retries.
       </p>
 
-      {/* Single Primary CTA: "See how it works" */}
-      <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
+      {/* Primary CTA: "See how it works" */}
+      <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0">
         <a
           href="#mechanism"
           onClick={handleScrollToMechanism}
           data-testid="cta-see-how-it-works"
-          className="inline-flex items-center gap-2.5 px-6 py-3 rounded-lg bg-[#E8A33D] hover:bg-[#d69333] text-[#12172B] font-semibold text-sm sm:text-base tracking-wide shadow-lg shadow-[#E8A33D]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+          className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-lg bg-[#E8A33D] hover:bg-[#d69333] text-[#12172B] font-semibold text-sm sm:text-base tracking-wide shadow-lg shadow-[#E8A33D]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
         >
           <span>See how it works</span>
           <ArrowDown className="w-4 h-4" />
@@ -357,17 +367,17 @@ export const HeroParticleNumeral: React.FC<HeroParticleNumeralProps> = ({
       </div>
 
       {/* Supporting verification badge list */}
-      <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-[#7E85A6]">
+      <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs font-mono text-[#7E85A6] px-2">
         <div className="flex items-center gap-1.5">
-          <CheckCircle2 className="w-3.5 h-3.5 text-[#7BA88C]" />
+          <CheckCircle2 className="w-3.5 h-3.5 text-[#7BA88C] flex-shrink-0" />
           <span>Deterministic stopping rules</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <CheckCircle2 className="w-3.5 h-3.5 text-[#7BA88C]" />
+          <CheckCircle2 className="w-3.5 h-3.5 text-[#7BA88C] flex-shrink-0" />
           <span>Multilingual outreach (EN, HI, TA)</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <ShieldCheck className="w-3.5 h-3.5 text-[#E8A33D]" />
+          <ShieldCheck className="w-3.5 h-3.5 text-[#E8A33D] flex-shrink-0" />
           <span>Zero customer credential solicitation</span>
         </div>
       </div>

@@ -40,14 +40,14 @@ export const BenchmarkModal: React.FC<BenchmarkModalProps> = ({ onClose }) => {
   const benchmark = seedsData?.multi_seed_robustness_benchmark;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0a0d18]/80 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#0a0d18]/80 backdrop-blur-sm">
       <div className="bg-[#1B2140] border border-[#2A3362] rounded-lg w-full max-w-4xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="p-4 border-b border-[#2A3362] bg-[#171D36] flex items-center justify-between">
+        <div className="p-3.5 sm:p-4 border-b border-[#2A3362] bg-[#171D36] flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5">
-            <BarChart3 className="w-5 h-5 text-[#E8A33D]" />
+            <BarChart3 className="w-5 h-5 text-[#E8A33D] flex-shrink-0" />
             <div>
-              <div className="text-base font-serif font-semibold text-[#F2F0EA] flex items-center gap-2">
+              <div className="text-sm sm:text-base font-serif font-semibold text-[#F2F0EA] flex items-center gap-2 flex-wrap">
                 <span>Multi-Seed Evaluation Benchmark</span>
                 <span className="text-xs font-mono font-normal px-2 py-0.5 rounded bg-[#12172B] text-[#B4B9D2] border border-[#2A3362]">
                   Seeds: {seedsData?.seeds_evaluated ? seedsData.seeds_evaluated.join(", ") : "—"}
@@ -62,15 +62,15 @@ export const BenchmarkModal: React.FC<BenchmarkModalProps> = ({ onClose }) => {
           <button
             data-testid="close-benchmark-btn"
             onClick={onClose}
-            className="p-1 rounded text-[#7E85A6] hover:text-[#F2F0EA] bg-[#12172B] hover:bg-[#222950] border border-[#2A3362] transition-colors"
+            className="min-w-[40px] min-h-[40px] sm:min-w-[36px] sm:min-h-[36px] flex items-center justify-center rounded-lg text-[#7E85A6] hover:text-[#F2F0EA] bg-[#12172B] hover:bg-[#222950] border border-[#2A3362] transition-colors cursor-pointer flex-shrink-0"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Baseline Banner */}
-        <div className="px-4 py-2 bg-[#141930] border-b border-[#2A3362] flex items-center justify-between text-xs font-mono">
-          <div className="flex items-center gap-2">
+        <div className="px-3.5 sm:px-4 py-2 bg-[#141930] border-b border-[#2A3362] flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs font-mono">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
             <span className="text-[#7E85A6]">Control Comparison Baseline:</span>
             <span className="font-semibold text-[#E8A33D]">
               {seedsData?.baseline_description || "—"}
@@ -103,8 +103,8 @@ export const BenchmarkModal: React.FC<BenchmarkModalProps> = ({ onClose }) => {
                   <span>5-Seed Robustness Comparison (Mean ± Standard Deviation)</span>
                 </div>
 
-                <div className="border border-[#2A3362] rounded-lg overflow-hidden">
-                  <table className="w-full text-xs font-mono text-left border-collapse">
+                <div className="border border-[#2A3362] rounded-lg overflow-x-auto max-w-full">
+                  <table className="w-full text-xs font-mono text-left border-collapse min-w-[520px]">
                     <thead className="bg-[#141930] text-[#7E85A6] text-[11px] border-b border-[#2A3362]">
                       <tr>
                         <th className="py-2.5 px-3">Metric</th>
@@ -182,8 +182,8 @@ export const BenchmarkModal: React.FC<BenchmarkModalProps> = ({ onClose }) => {
                     <span>Multilingual Outreach Breakdown (Localized Performance)</span>
                   </div>
 
-                  <div className="border border-[#2A3362] rounded-lg overflow-hidden">
-                    <table className="w-full text-xs font-mono text-left border-collapse">
+                  <div className="border border-[#2A3362] rounded-lg overflow-x-auto max-w-full">
+                    <table className="w-full text-xs font-mono text-left border-collapse min-w-[560px]">
                       <thead className="bg-[#141930] text-[#7E85A6] text-[11px] border-b border-[#2A3362]">
                         <tr>
                           <th className="py-2 px-3">Language Code</th>
@@ -225,11 +225,11 @@ export const BenchmarkModal: React.FC<BenchmarkModalProps> = ({ onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="p-3 border-t border-[#2A3362] bg-[#171D36] flex items-center justify-between text-xs font-mono text-[#7E85A6]">
+        <div className="p-3.5 border-t border-[#2A3362] bg-[#171D36] flex items-center justify-between text-xs font-mono text-[#7E85A6]">
           <span>Revora Multi-Seed Evaluation v1.0</span>
           <button
             onClick={onClose}
-            className="px-3 py-1 rounded bg-[#12172B] hover:bg-[#222950] text-[#F2F0EA] border border-[#2A3362] text-xs font-medium transition-colors"
+            className="min-h-[40px] px-4 py-1.5 rounded-lg bg-[#12172B] hover:bg-[#222950] text-[#F2F0EA] border border-[#2A3362] text-xs font-medium transition-colors cursor-pointer"
           >
             Close
           </button>

@@ -69,20 +69,22 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({
   return (
     <section aria-label="Executive Metrics" className="space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-2 px-0.5">
-        <div className="flex items-center gap-2 text-xs text-[#B4B9D2] font-mono">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#7BA88C] shadow-sm shadow-[#7BA88C]/40" />
-          <span className="tracking-wide">LIVE EVALUATION AGGREGATES · CHRONOLOGICALLY HELD-OUT TEST COHORT</span>
+        <div className="flex items-center gap-2 text-xs text-[#B4B9D2] font-mono max-w-full">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#7BA88C] shadow-sm shadow-[#7BA88C]/40 flex-shrink-0" />
+          <span className="tracking-wide text-[11px] sm:text-xs break-words">
+            LIVE EVALUATION AGGREGATES · CHRONOLOGICALLY HELD-OUT TEST COHORT
+          </span>
         </div>
-        <span className="text-xs font-mono text-[#7E85A6]">
+        <span className="text-[11px] sm:text-xs font-mono text-[#7E85A6]">
           Baseline: <span className="text-[#B4B9D2]">{data.baseline_description}</span>
         </span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4">
         {/* Metric 1: Recovery Rate */}
-        <div className="p-5 rounded-xl bg-[#1B2140] border border-[#2A3362] hover:border-[#3D4A88] transition-all shadow-sm flex flex-col justify-between">
+        <div className="p-4 sm:p-5 rounded-xl bg-[#1B2140] border border-[#2A3362] hover:border-[#3D4A88] transition-all shadow-sm flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between text-xs text-[#B4B9D2] mb-1.5">
+            <div className="flex flex-wrap items-center justify-between gap-1 text-xs text-[#B4B9D2] mb-1.5">
               <span className="font-medium">Recovery Rate</span>
               <div className="inline-flex items-center gap-1 text-xs font-mono font-semibold text-[#7BA88C] bg-[#7BA88C]/10 px-2 py-0.5 rounded-md border border-[#7BA88C]/30">
                 <ArrowUpRight className="w-3.5 h-3.5" />
@@ -99,16 +101,16 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({
         </div>
 
         {/* Metric 2: Recovered Revenue */}
-        <div className="p-5 rounded-xl bg-[#1B2140] border border-[#2A3362] hover:border-[#3D4A88] transition-all shadow-sm flex flex-col justify-between">
+        <div className="p-4 sm:p-5 rounded-xl bg-[#1B2140] border border-[#2A3362] hover:border-[#3D4A88] transition-all shadow-sm flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between text-xs text-[#B4B9D2] mb-1.5">
+            <div className="flex flex-wrap items-center justify-between gap-1 text-xs text-[#B4B9D2] mb-1.5">
               <span className="font-medium">Recovered Value</span>
               <div className="inline-flex items-center gap-1 text-xs font-mono font-semibold text-[#7BA88C] bg-[#7BA88C]/10 px-2 py-0.5 rounded-md border border-[#7BA88C]/30">
                 <ArrowUpRight className="w-3.5 h-3.5" />
                 <span>+{formatINR(delta.absolute_recovered_amount_delta_inr)}</span>
               </div>
             </div>
-            <div className="text-2xl lg:text-[26px] font-bold font-mono text-[#F2F0EA] tabular-nums tracking-tight my-1">
+            <div className="text-2xl lg:text-[26px] font-bold font-mono text-[#F2F0EA] tabular-nums tracking-tight my-1 truncate" title={formatINR(revora.total_recovered_amount_inr)}>
               {formatINR(revora.total_recovered_amount_inr)}
             </div>
           </div>
@@ -118,9 +120,9 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({
         </div>
 
         {/* Metric 3: Futile Retries Prevented */}
-        <div className="p-5 rounded-xl bg-[#1B2140] border border-[#2A3362] hover:border-[#3D4A88] transition-all shadow-sm flex flex-col justify-between">
+        <div className="p-4 sm:p-5 rounded-xl bg-[#1B2140] border border-[#2A3362] hover:border-[#3D4A88] transition-all shadow-sm flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between text-xs text-[#B4B9D2] mb-1.5">
+            <div className="flex flex-wrap items-center justify-between gap-1 text-xs text-[#B4B9D2] mb-1.5">
               <span className="font-medium">Futile Retries Saved</span>
               <div className="inline-flex items-center gap-1 text-xs font-mono font-semibold text-[#E8A33D] bg-[#E8A33D]/10 px-2 py-0.5 rounded-md border border-[#E8A33D]/30">
                 <ArrowDownRight className="w-3.5 h-3.5" />
@@ -137,9 +139,9 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({
         </div>
 
         {/* Metric 4: Stopping Rule Compliance */}
-        <div className="p-5 rounded-xl bg-[#1B2140] border border-[#2A3362] hover:border-[#3D4A88] transition-all shadow-sm flex flex-col justify-between">
+        <div className="p-4 sm:p-5 rounded-xl bg-[#1B2140] border border-[#2A3362] hover:border-[#3D4A88] transition-all shadow-sm flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between text-xs text-[#B4B9D2] mb-1.5">
+            <div className="flex flex-wrap items-center justify-between gap-1 text-xs text-[#B4B9D2] mb-1.5">
               <span className="font-medium">Stopping Compliance</span>
               <div className="inline-flex items-center gap-1 text-xs font-mono font-semibold text-[#7BA88C] bg-[#7BA88C]/10 px-2 py-0.5 rounded-md border border-[#7BA88C]/30">
                 <ShieldCheck className="w-3.5 h-3.5" />
@@ -156,9 +158,9 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({
         </div>
 
         {/* Metric 5: Cohort Volume */}
-        <div className="p-5 rounded-xl bg-[#1B2140] border border-[#2A3362] hover:border-[#3D4A88] transition-all shadow-sm flex flex-col justify-between">
+        <div className="p-4 sm:p-5 rounded-xl bg-[#1B2140] border border-[#2A3362] hover:border-[#3D4A88] transition-all shadow-sm flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between text-xs text-[#B4B9D2] mb-1.5">
+            <div className="flex flex-wrap items-center justify-between gap-1 text-xs text-[#B4B9D2] mb-1.5">
               <span className="font-medium">Evaluated Cohort</span>
               <div className="inline-flex items-center gap-1 text-xs font-mono text-[#B4B9D2] bg-[#222950] px-2 py-0.5 rounded-md border border-[#2A3362]">
                 <span>Seed {metadata.primary_seed}</span>

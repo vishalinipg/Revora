@@ -105,7 +105,7 @@ export default function OperatorConsolePage() {
       />
 
       {/* Main Operator Console Workspace */}
-      <main className="flex-1 max-w-[1720px] w-full mx-auto px-6 py-5 flex flex-col gap-5">
+      <main className="flex-1 max-w-[1720px] w-full mx-auto px-3 sm:px-6 py-4 sm:py-5 flex flex-col gap-4 sm:gap-5">
         {/* Executive Metric Aggregates */}
         <MetricsOverview
           data={metricsData}
@@ -115,8 +115,8 @@ export default function OperatorConsolePage() {
         />
 
         {/* Full-Length Payment Operations Console Workspace */}
-        <section aria-label="Payment Operations Console" className="flex-1 flex flex-col gap-6 w-full">
-          {/* Full-Length Recurring Payments Queue Table */}
+        <section aria-label="Payment Operations Console" className="flex-1 flex flex-col gap-5 sm:gap-6 w-full">
+          {/* Full-Length Recurring Payments Queue */}
           <div className="w-full">
             <PaymentQueue
               data={paymentsData}
@@ -142,3 +142,4 @@ export default function OperatorConsolePage() {
     </div>
   );
 }
+

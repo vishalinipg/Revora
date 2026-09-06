@@ -72,14 +72,14 @@ export const CustomerTimeline: React.FC<CustomerTimelineProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <div className="bg-[#1B2140] border border-[#2A3362] rounded-xl w-full max-w-2xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm">
+      <div className="bg-[#1B2140] border border-[#2A3362] rounded-xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="p-4 border-b border-[#2A3362] bg-[#171D36] flex items-center justify-between">
+        <div className="p-3.5 sm:p-4 border-b border-[#2A3362] bg-[#171D36] flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5">
-            <History className="w-4 h-4 text-[#E8A33D]" />
+            <History className="w-4 h-4 text-[#E8A33D] flex-shrink-0" />
             <div>
-              <div className="text-sm font-bold text-[#F2F0EA] flex items-center gap-2 font-display">
+              <div className="text-sm font-bold text-[#F2F0EA] flex items-center gap-2 font-display flex-wrap">
                 <span>Lifecycle Event Timeline</span>
                 <span className="text-xs font-mono font-normal px-2 py-0.5 rounded bg-[#222950] text-[#B4B9D2] border border-[#2A3362]">
                   {paymentId}
@@ -94,14 +94,14 @@ export const CustomerTimeline: React.FC<CustomerTimelineProps> = ({
           <button
             data-testid="close-timeline-btn"
             onClick={onClose}
-            className="p-1 rounded text-[#B4B9D2] hover:text-[#F2F0EA] bg-[#222950] hover:bg-[#28315E] border border-[#2A3362] transition-colors"
+            className="min-w-[40px] min-h-[40px] sm:min-w-[36px] sm:min-h-[36px] flex items-center justify-center rounded-lg text-[#B4B9D2] hover:text-[#F2F0EA] bg-[#222950] hover:bg-[#28315E] border border-[#2A3362] transition-colors cursor-pointer flex-shrink-0"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Provenance Disclaimer Legend */}
-        <div className="px-4 py-2 bg-[#171D36] border-b border-[#2A3362] flex flex-wrap items-center gap-4 text-[11px] font-mono">
+        <div className="px-3.5 sm:px-4 py-2 bg-[#171D36] border-b border-[#2A3362] flex flex-wrap items-center gap-2 sm:gap-4 text-[11px] font-mono">
           <span className="text-[#7E85A6]">Event Provenance:</span>
           <span className="inline-flex items-center gap-1 text-[#B5615A]">
             <span className="w-2 h-2 rounded-full bg-[#B5615A]" />
@@ -172,8 +172,8 @@ export const CustomerTimeline: React.FC<CustomerTimelineProps> = ({
                     {evt.details && Object.keys(evt.details).length > 0 && (
                       <div className="p-2.5 rounded bg-[#222950] border border-[#2A3362] text-[11px] font-mono space-y-1">
                         {Object.entries(evt.details).map(([key, val]) => (
-                          <div key={key} className="flex items-start gap-2">
-                            <span className="text-[#7E85A6] min-w-[120px]">{key}:</span>
+                          <div key={key} className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-2">
+                            <span className="text-[#7E85A6] sm:min-w-[120px] flex-shrink-0">{key}:</span>
                             <span className="text-[#F2F0EA] break-all">
                               {typeof val === "object" ? JSON.stringify(val) : String(val)}
                             </span>
@@ -189,11 +189,11 @@ export const CustomerTimeline: React.FC<CustomerTimelineProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-3 border-t border-[#2A3362] bg-[#171D36] flex items-center justify-between text-xs font-mono text-[#7E85A6]">
+        <div className="p-3.5 border-t border-[#2A3362] bg-[#171D36] flex items-center justify-between text-xs font-mono text-[#7E85A6]">
           <span>Revora Event Logging v1.0</span>
           <button
             onClick={onClose}
-            className="px-3 py-1 rounded bg-[#222950] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] text-xs font-medium"
+            className="min-h-[44px] sm:min-h-[36px] px-4 py-2 rounded-lg bg-[#222950] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] text-xs font-medium cursor-pointer transition-colors"
           >
             Close
           </button>

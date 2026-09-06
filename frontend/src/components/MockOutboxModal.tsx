@@ -46,20 +46,20 @@ export const MockOutboxModal: React.FC<MockOutboxModalProps> = ({ paymentId, onC
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <div className="bg-[#1B2140] border border-[#2A3362] rounded-xl w-full max-w-xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm">
+      <div className="bg-[#1B2140] border border-[#2A3362] rounded-xl w-full max-w-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Persistent Simulation Warning Watermark Banner */}
-        <div className="bg-[#E8A33D] text-[#12172B] px-4 py-2 text-center font-bold text-xs tracking-wider uppercase flex items-center justify-center gap-2">
-          <ShieldAlert className="w-4 h-4" />
-          <span>SIMULATED — NO MESSAGE SENT · SYNTHETIC COMMUNICATION ONLY</span>
+        <div className="bg-[#E8A33D] text-[#12172B] px-3 sm:px-4 py-2 text-center font-bold text-[11px] sm:text-xs tracking-wider uppercase flex flex-wrap items-center justify-center gap-1.5">
+          <ShieldAlert className="w-4 h-4 flex-shrink-0" />
+          <span>SIMULATED — NO MESSAGE SENT · SYNTHETIC ONLY</span>
         </div>
 
         {/* Modal Header */}
-        <div className="p-4 border-b border-[#2A3362] bg-[#171D36] flex items-center justify-between">
+        <div className="p-3.5 sm:p-4 border-b border-[#2A3362] bg-[#171D36] flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5">
-            <MessageSquare className="w-4 h-4 text-[#E8A33D]" />
+            <MessageSquare className="w-4 h-4 text-[#E8A33D] flex-shrink-0" />
             <div>
-              <div className="text-sm font-bold text-[#F2F0EA] flex items-center gap-2 font-display">
+              <div className="text-sm font-bold text-[#F2F0EA] flex items-center gap-2 font-display flex-wrap">
                 <span>Multilingual Mock Outbox</span>
                 <span className="text-xs font-mono font-normal px-2 py-0.5 rounded bg-[#222950] text-[#B4B9D2] border border-[#2A3362]">
                   {paymentId}
@@ -74,7 +74,7 @@ export const MockOutboxModal: React.FC<MockOutboxModalProps> = ({ paymentId, onC
           <button
             data-testid="close-outbox-btn"
             onClick={onClose}
-            className="p-1 rounded text-[#B4B9D2] hover:text-[#F2F0EA] bg-[#222950] hover:bg-[#28315E] border border-[#2A3362] transition-colors"
+            className="min-w-[40px] min-h-[40px] sm:min-w-[36px] sm:min-h-[36px] flex items-center justify-center rounded-lg text-[#B4B9D2] hover:text-[#F2F0EA] bg-[#222950] hover:bg-[#28315E] border border-[#2A3362] transition-colors cursor-pointer flex-shrink-0"
           >
             <X className="w-4 h-4" />
           </button>
@@ -98,14 +98,14 @@ export const MockOutboxModal: React.FC<MockOutboxModalProps> = ({ paymentId, onC
               <div>{error}</div>
               <button
                 onClick={fetchOutreach}
-                className="mt-2 px-3 py-1 rounded bg-[#B5615A]/20 hover:bg-[#B5615A]/30 border border-[#B5615A]/40 text-[#F2F0EA] text-xs"
+                className="mt-2 min-h-[40px] px-3 py-1 rounded bg-[#B5615A]/20 hover:bg-[#B5615A]/30 border border-[#B5615A]/40 text-[#F2F0EA] text-xs cursor-pointer"
               >
                 Retry
               </button>
             </div>
           ) : !draft ? null : draft.outreach_suppressed ? (
             /* SUPPRESSED STATE: STOP or HUMAN_ESCALATION */
-            <div className="p-6 rounded-lg bg-[#B5615A]/10 border border-[#B5615A]/30 text-center space-y-3">
+            <div className="p-5 sm:p-6 rounded-lg bg-[#B5615A]/10 border border-[#B5615A]/30 text-center space-y-3">
               <div className="w-12 h-12 rounded-full bg-[#B5615A]/20 border border-[#B5615A]/40 flex items-center justify-center mx-auto text-[#B5615A]">
                 <Lock className="w-6 h-6" />
               </div>
@@ -118,7 +118,7 @@ export const MockOutboxModal: React.FC<MockOutboxModalProps> = ({ paymentId, onC
               </p>
               <div className="pt-2">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono bg-[#B5615A]/15 text-[#B5615A] border border-[#B5615A]/30">
-                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <ShieldCheck className="w-3.5 h-3.5 flex-shrink-0" />
                   <span>Customer Protection Rule Active · Zero Messages Dispatched</span>
                 </span>
               </div>
@@ -140,12 +140,12 @@ export const MockOutboxModal: React.FC<MockOutboxModalProps> = ({ paymentId, onC
               </div>
 
               {/* Message Chat Preview Bubble */}
-              <div className="p-4 rounded-lg bg-[#171D36] border border-[#2A3362] space-y-2">
-                <div className="flex items-center justify-between text-[11px] font-mono text-[#7E85A6] pb-1 border-b border-[#2A3362]">
+              <div className="p-3.5 sm:p-4 rounded-lg bg-[#171D36] border border-[#2A3362] space-y-2">
+                <div className="flex flex-wrap items-center justify-between gap-1 text-[11px] font-mono text-[#7E85A6] pb-1 border-b border-[#2A3362]">
                   <span>SIMULATED DISPATCH PREVIEW</span>
-                  <span>WATERMARK: {draft.simulation_watermark}</span>
+                  <span className="text-[10px]">WATERMARK: {draft.simulation_watermark}</span>
                 </div>
-                <div className="p-3.5 rounded-lg bg-[#222950] border border-[#2A3362] text-[#F2F0EA] text-xs leading-relaxed whitespace-pre-line font-sans select-all">
+                <div className="p-3 rounded-lg bg-[#222950] border border-[#2A3362] text-[#F2F0EA] text-xs leading-relaxed whitespace-pre-line font-sans select-all break-words">
                   {draft.message_body}
                 </div>
               </div>
@@ -153,7 +153,7 @@ export const MockOutboxModal: React.FC<MockOutboxModalProps> = ({ paymentId, onC
               {/* Safety Guarantees Checklist */}
               <div className="p-3 rounded-lg bg-[#171D36] border border-[#2A3362] space-y-1.5 text-xs font-mono">
                 <div className="text-[11px] text-[#B4B9D2] uppercase font-semibold flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#7BA88C]" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#7BA88C] flex-shrink-0" />
                   <span>Fintech Safety Compliance Guarantees</span>
                 </div>
                 <div className="space-y-1 text-[#B4B9D2] text-[11px]">
@@ -176,11 +176,11 @@ export const MockOutboxModal: React.FC<MockOutboxModalProps> = ({ paymentId, onC
         </div>
 
         {/* Footer */}
-        <div className="p-3 border-t border-[#2A3362] bg-[#171D36] flex items-center justify-between text-xs font-mono text-[#7E85A6]">
+        <div className="p-3.5 border-t border-[#2A3362] bg-[#171D36] flex items-center justify-between text-xs font-mono text-[#7E85A6]">
           <span>Revora Outbox Mock v1.0</span>
           <button
             onClick={onClose}
-            className="px-3 py-1 rounded bg-[#222950] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] text-xs font-medium"
+            className="min-h-[40px] px-4 py-1.5 rounded-lg bg-[#222950] hover:bg-[#28315E] text-[#F2F0EA] border border-[#2A3362] text-xs font-medium cursor-pointer transition-colors"
           >
             Done
           </button>
